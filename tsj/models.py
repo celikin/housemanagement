@@ -11,13 +11,15 @@ class House(models.Model):
     street = models.ForeignKey(Street)
     number = models.CharField(max_length=4, verbose_name=u'Номер дома')
 
+    def __unicode__(self):
+        return '%s, %s' % (self.street.name, self.number) 
 
 class Company(models.Model):
     TYPIES = (
         (0, u"ТСЖ"),
         (1, u"УК")
     )
-    company_type = models.IntegerField(choices=TYPIES, default=0) 
+    company_type = models.IntegerField(choices=TYPIES, default=0)
     name = models.CharField(max_length=150)
     full_name = models.CharField(max_length=150)
     post_adress = models.TextField(verbose_name=u"Почтовый адрес")
@@ -40,7 +42,9 @@ class Company(models.Model):
 class Resident(models.Model):
     user = models.OneToOneField(User)
     phone = models.CharField(max_length=15, verbose_name=u"Телефон")
-    fio = models.CharField(max_length=100, verbose_name=u"ФИО")
+    first_name = models.CharField(max_length=150, verbose_name=u"Имя")
+    last_name = models.CharField(max_length=150, verbose_name=u"Фамилия")
+    middle_name = models.CharField(max_length=150, verbose_name=u"Отчество")
     house = models.ForeignKey(House)
     flat = models.CharField(max_length=10)
     lnumb = models.CharField(max_length=20)
