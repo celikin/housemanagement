@@ -40,7 +40,9 @@ class Company(models.Model):
 class Resident(models.Model):
     user = models.OneToOneField(User)
     phone = models.CharField(max_length=15, verbose_name=u"Телефон")
-    fio = models.CharField(max_length=100, verbose_name=u"ФИО")
+    first_name = models.CharField(max_length=150, verbose_name=u"Имя")
+    last_name = models.CharField(max_length=150, verbose_name=u"Фамилия")
+    middle_name = models.CharField(max_length=150, verbose_name=u"Отчество")
     house = models.ForeignKey(House)
     flat = models.CharField(max_length=10)
     lnumb = models.CharField(max_length=20)
