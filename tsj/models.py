@@ -53,3 +53,28 @@ class Resident(models.Model):
     bill_numb = models.CharField(max_length=20, verbose_name=u"Номер лицевого счёта")
     passport = models.FileField(upload_to="scans", verbose_name=u"Скан паспорта")
     registration = models.FileField(upload_to="scans", verbose_name=u"Скан прописки")
+
+
+class CommunalService(models.Model):
+    name = models.CharField(max_length=150, verbose_name=u"Название")
+
+    class Meta:
+        verbose_name = "Услуга"
+        verbose_name_plural = "Услуги"
+
+    def __unicode__(self):
+        return self.name
+    
+
+
+class CommunalMeasurement(models.Model):
+    resident = models.ForeignKey(CommunalServices, verbose_name=u"Пользователь")
+    value = models.FloatField(verbose_name=u"Значение")
+
+    class Meta:
+        verbose_name = "Измерение"
+        verbose_name_plural = "Измерения"
+
+    def __unicode__(self):
+        return unicode(self.value)
+    
