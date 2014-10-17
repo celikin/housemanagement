@@ -3,6 +3,11 @@ housemanagment
 
 #Hackaton #2
 
+#Запуск
+./manage.py makemigrations
+./manage.py migrate
+./manage.py loaddata initial
+
 #Интерфейс пользователя / фичи
 * Лицевой счет
 	
