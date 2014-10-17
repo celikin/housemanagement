@@ -1,10 +1,12 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from rest_framework import serializers, viewsets, routers
+from rest_framework import serializers, viewsets, routers, permissions
 from tsj.models import *
 
 # Serializers define the API representation.
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
+    company_type = serializers.PrimaryKeyRelatedField()
+
     class Meta:
         model = Company
         fields = ('full_name','post_adress','phone','email','boss_fio',
@@ -14,6 +16,7 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
 
 class ResidentSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.PrimaryKeyRelatedField()
@@ -26,6 +29,7 @@ class ResidentSerializer(serializers.HyperlinkedModelSerializer):
 class ResidentViewSet(viewsets.ModelViewSet):
     queryset = Resident.objects.all()
     serializer_class = ResidentSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
 
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -34,9 +38,9 @@ router.register(r'residents', ResidentViewSet)
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^', include(router.urls)),
+    url(r'^api/', include(router.urls)),
     url(r'^$', 'tsj.views.home', name='home'),
-    url(r'^/registration/', 'tsj.views.registration'),
+    url(r'^/registration/', 'tsj.views.registeregistration'),
     url(r'^/register/', 'tsj.views.register'),
     url(r'^admin/', include(admin.site.urls)),
 )
