@@ -8,7 +8,9 @@ from django.contrib.auth import authenticate, login
 def home(request):
     if not request.user.is_authenticated():
         return render(request, "home.html")
-    return render(request, "userhome.html")
+    return render(request, "userhome.html", {
+        "section": "home"
+    })
 
 
 def auth(request):
