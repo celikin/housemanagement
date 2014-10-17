@@ -57,6 +57,7 @@ def registration(request):
         "form": form
     })
 
+
 def common_registration(request, Form, template):
     if request.user.is_authenticated():
         return redirect(reverse('home'))
@@ -68,7 +69,7 @@ def common_registration(request, Form, template):
             entity = form.save(commit=False)
             entity.user = user
             messages.success(request, 'Вы успешно зарегестрированы. Ожидайте подтверждения')
-            company.save()
+            entity.save()
             return redirect(reverse('home'))
     else:
         form = Form()
@@ -97,6 +98,7 @@ def userprofile(request):
 
 def register(request):
     return common_registration(request, ResidentForm, 'user/registration.html')
+
 
 def logoutview(request):
     logout(request)
