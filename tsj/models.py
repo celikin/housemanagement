@@ -14,6 +14,7 @@ class House(models.Model):
     def __unicode__(self):
         return '%s, %s' % (self.street.name, self.number) 
 
+
 class Company(models.Model):
     TYPIES = (
         (0, u"ТСЖ"),
@@ -37,6 +38,7 @@ class Company(models.Model):
     kor_schet = models.CharField(max_length=15, verbose_name=u"Кор. счет")
     bik = models.CharField(max_length=15, verbose_name=u"БИК")
     workgraph = models.TextField(verbose_name=u"График работы")
+    proof = models.FileField(upload_to="scans", verbose_name=u"Подтверждающий документ")
 
 
 class Resident(models.Model):
