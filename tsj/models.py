@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth import User
+from django.contrib.auth.models import User
 
 
 class Street(models.Model):
@@ -32,12 +32,12 @@ class Company(models.Model):
     bill_numb = models.CharField(max_length=15, verbose_name=u"Расчетный счет")
     bank_name = models.CharField(max_length=150, verbose_name=u"В ОАО Банк")
     kor_schet = models.CharField(max_length=15, verbose_name=u"Кор. счет")
-    bik = models.CharField(max_length=15, verbose_name=u"Кор. счет")
-    workgraph = models.TextField(verbose_name=u"Кор. счет")
+    bik = models.CharField(max_length=15, verbose_name=u"БИК")
+    workgraph = models.TextField(verbose_name=u"График работы")
 
 
 class Resident(models.Model):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     phone = models.CharField(max_length=15, verbose_name=u"Телефон")
     fio = models.CharField(max_length=100, verbose_name=u"ФИО")
     house = models.ForeignKey(House)
