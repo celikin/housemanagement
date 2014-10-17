@@ -12,7 +12,7 @@ class House(models.Model):
     number = models.CharField(max_length=4, verbose_name=u'Номер дома')
 
     def __unicode__(self):
-        return '%s, %s' % (self.street.name, self.number) 
+        return '%s, %s' % (self.street.name, self.number)
 
 
 class Company(models.Model):
@@ -21,6 +21,7 @@ class Company(models.Model):
         (1, u"УК")
     )
     user = models.OneToOneField(User)
+    houses = models.ManyToManyField(House)
     company_type = models.IntegerField(choices=TYPIES, default=0, verbose_name=u"Тип")
     name = models.CharField(max_length=150, verbose_name=u"Название")
     full_name = models.CharField(max_length=150, verbose_name=u"Полное наимаенование")
