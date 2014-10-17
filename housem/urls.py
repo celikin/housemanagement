@@ -41,10 +41,12 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^api/', include(router.urls)),
     url(r'^$', 'tsj.views.home', name='home'),
+    url(r'^org/home/$', 'tsj.views.orghome', name="orghome"),
     url(r'^auth/$', 'tsj.views.auth', name='auth'),
-    url(r'^registration/', 'tsj.views.registration', name="registration"),
-    url(r'^register/', 'tsj.views.register', name="register"),
-    url(r'^orgregistration/', 'tsj.views.orgregistration', name="orgregistration"),
+    url(r'^logout/$', 'tsj.views.logoutview', name='logoutview'),
+    url(r'^registration/$', 'tsj.views.registration', name="registration"),
+    url(r'^register/$', 'tsj.views.register', name="register"),
+    url(r'^orgregistration/$', 'tsj.views.orgregistration', name="orgregistration"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

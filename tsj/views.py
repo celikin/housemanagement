@@ -4,13 +4,31 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import CompanyForm, ResidentForm
+from .models import Resident, Company
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
+
+
+def is_org(user):
+    try:
+        user = Resident.objects.get(user=user)
+    except Resident.DoesNotExist:
+        return True
+    return False
 
 
 def home(request):
     if not request.user.is_authenticated():
         return render(request, "home.html")
+    if is_org(request.user):
+        return redirect(reverse("orghome"))
     return render(request, "userhome.html")
+
+
+def orghome(request):
+    if not request.user.is_authenticated() or not is_org(request.user):
+        return redirect(reverse("home"))
+    return render(request, "org/home.html")
 
 
 def auth(request):
@@ -34,7 +52,7 @@ def registration(request):
         return redirect(reverse('home'))
 
     form = ResidentForm()
-    return render(request, "registration.html", {
+    return render(request, "user/registration.html", {
         "form": form
     })
 
@@ -54,10 +72,15 @@ def orgregistration(request):
             return redirect(reverse('home'))
     else:
         form = CompanyForm()
-    return render(request, "orgregistration.html", {
+    return render(request, "org/registration.html", {
         "form": form
     })
 
 
 def register(request):
 	return redirect(reverse('home'))
+
+
+def logoutview(request):
+    logout(request)
+    return redirect(reverse('home'))
