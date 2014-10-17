@@ -15,8 +15,8 @@ class CompanyForm(ModelForm):
 
 class ResidentForm(ModelForm):
 
-    password = forms.CharField(widget=forms.PasswordInput(), label=u'Пароль', required=True)
     username = forms.CharField(label='Имя пользователя', required=True)
+    password = forms.CharField(widget=forms.PasswordInput(), label=u'Пароль', required=True)
 
     
     class Meta:

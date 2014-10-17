@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from .forms import CompanyForm
+from .forms import CompanyForm, ResidentForm
 from django.contrib.auth.models import User
 
 
@@ -34,7 +34,7 @@ def registration(request):
         return redirect(reverse('home'))
 
     form = ResidentForm()
-    return render(request, "orgregistration.html", {
+    return render(request, "registration.html", {
         "form": form
     })
 
