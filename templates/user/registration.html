@@ -18,13 +18,14 @@
 {% endblock %}
 {% block content %}
 
-	<form method = "post" action="register" action="" class="form-horizontal" role="form">
+	<form method = "post"  action="{% url "register" %}" class="form-horizontal" role="form">
 	{% csrf_token %}
 	{% for field in form.visible_fields %}
-	<div class="form-group">
+	<div class="form-group {% if field.errors %}has-error{% endif %}">
 		<label for="{{field.name}}" class="col-sm-3 control-label">{{field.label}}:</label>
 		<div class="col-sm-4">
-			{{field}}
+			{{field}}		<span class="help-block">{% if field.errors %}{% for error in field.errors %}{{error}}{% endfor %}{% endif %}</span>
+
 		</div>
 	</div>
 	{% endfor %}
