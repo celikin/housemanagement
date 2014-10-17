@@ -7,6 +7,7 @@ from .forms import CompanyForm, ResidentForm
 from .models import Resident, Company
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
+from django.forms.models import model_to_dict
 
 
 def is_org(user):
@@ -77,13 +78,18 @@ def common_registration(request, Form, template):
 
 
 def orgregistration(request):
-    return common_registration(request, CompanyForm, 'orgregistration.html')
+    return common_registration(request, CompanyForm, 'org/registration.html')
 
+
+def orgprofile(request):
+    profile = CompanyForm(data=model_to_dict(Company.objects.get(user=request.user)))
+    return render(request, "org/profile.html", {
+        "profile": profile,
+    })
 
 
 def register(request):
-    return common_registration(request, ResidentForm, 'registration.html')
-
+    return common_registration(request, ResidentForm, 'user/registration.html')
 
 def logoutview(request):
     logout(request)
