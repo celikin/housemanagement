@@ -6,3 +6,8 @@ class CompanyForm(ModelForm):
 
     class Meta:
         model = Company
+
+class ResidentForm(ModelForm):
+	
+    class Meta:
+        model = Resident
