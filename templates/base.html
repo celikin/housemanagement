@@ -13,21 +13,8 @@
 </head>
 <body>
 {% if request.user.is_authenticated %}
-<nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{% url "home" %}">House Management</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li {% if current_url == "home" %} class="active" {% endif %}><a href="{% url "home" %}">Панель управления</a></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+{% block menu %}
+{% endblock %}
 {% endif %}
 <div class="container content">
     {% if messages %}
