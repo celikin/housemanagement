@@ -37,7 +37,7 @@ class Company(models.Model):
 
 
 class Resident(models.Model):
-    user = models.ForeignKey(User)
+    user = models.OneToOneField(User)
     phone = models.CharField(max_length=15, verbose_name=u"Телефон")
     fio = models.CharField(max_length=100, verbose_name=u"ФИО")
     house = models.ForeignKey(House)
