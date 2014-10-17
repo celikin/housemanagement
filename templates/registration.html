@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% comment %}
+	ФИО
+	Л/С (реквизит квартиры)
+	Доки (аттач: паспорт и прописка)
+	Телефон
+{% endcomment %}
+{% block content %}
+	<form method = "post" action = "register">
+		<label for = "username">Имя пользователя:</label><input name = "username">
+		<label for = "password">Пароль:</label><input name = "password">
+		<label for = "phone">Номер мобильного:</label><input name = "phone">
+	</form>
+{% endblock %}
