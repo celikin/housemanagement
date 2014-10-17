@@ -48,7 +48,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'tsj.views.logoutview', name='logoutview'),
     url(r'^registration/$', 'tsj.views.registration', name="registration"),
     url(r'^register/$', 'tsj.views.register', name="register"),
-    url(r'^orgregistration/$', 'tsj.views.orgregistration', name="orgregistration"),
+    url(r'^org/registration/$', 'tsj.views.orgregistration', name="orgregistration"),
     url(r'^admin/', include(admin.site.urls)),
 )
 
