@@ -8,6 +8,7 @@ class Street(models.Model):
 
 
 class House(models.Model):
+    street = models.ForeignKey(Street)
     number = models.CharField(max_length=4, verbose_name=u'Номер дома')
 
 
