@@ -32,8 +32,11 @@ def auth(request):
 def registration(request):
     if request.user.is_authenticated():
         return redirect(reverse('home'))
-    else:
-        return render(request, "registration.html")
+    
+    form = ResidentForm()
+    return render(request, "orgregistration.html", {
+        "form": form
+    })
 
 
 def orgregistration(request):

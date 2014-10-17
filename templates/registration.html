@@ -6,8 +6,33 @@
 	Телефон
 {% endcomment %}
 {% block content %}
-	<form method = "post" action="register" class="form-horizontal" role="form">
 
+	{% block content %}
+		<form method = "post" action="register" action="" class="form-horizontal" role="form">
+		{% csrf_token %}
+		{% for field in form.visible_fields %}
+		<div class="form-group">
+			<label for="{{field.name}}" class="col-sm-3 control-label">{{field.label}}:</label>
+			<div class="col-sm-4">
+				{{field}}
+			</div>
+		</div>
+		{% endfor %}
+		 <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		    <button type="submit" class="btn btn-default">Регистрация</button>
+		 </div>
+		</form>
+
+		<script type="text/javascript">
+			$("form input, form textarea, form select").each(function(){
+				$(this).addClass("form-control");
+			});
+			$('input[type=file]').bootstrapFileInput();
+		</script>
+	{% endblock %}
+
+	<form method = "post" action="register" class="form-horizontal" role="form">
 		<div class="form-group">
 			<label for="username" class="col-sm-3 control-label">Имя пользователя:</label>
 			<div class="col-sm-4">
