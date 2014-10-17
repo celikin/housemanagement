@@ -5,14 +5,21 @@
 	Доки (аттач: паспорт и прописка)
 	Телефон
 {% endcomment %}
+{% block scripts %}
+<script type="text/javascript">
+$("form input, form textarea, form select").each(function(){
+	$(this).addClass("form-control");
+});
+</script>
+{% endblock %}
 {% block content %}
-	<form method = "post" action="register" class="form-horizontal" role="form">
+	<form method = "post" action="register" action="" class="form-horizontal" role="form">
 	{% csrf_token %}
 	{% for field in form.visible_fields %}
 	<div class="form-group">
 		<label for="{{field.name}}" class="col-sm-3 control-label">{{field.label}}:</label>
 		<div class="col-sm-4">
-			<input name="{{field.name}}" class="form-control" placeholder="Введите {{field.label|lower}}">
+			{{field}}
 		</div>
 	</div>
 	{% endfor %}

@@ -9,7 +9,6 @@
     <script src="{{STATIC_URL}}js/jquery-2.1.1.min.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
     <script src="{{STATIC_URL}}js/bootstrap.file-input.js"></script>
-    {% block scripts %}{% endblock %}
 
 </head>
 <body>
@@ -41,5 +40,6 @@
     {% endif %} 
     {% block content %}{% endblock %}
 </div>
+{% block scripts %}{% endblock %}
 </body>
 </html>
