@@ -5,18 +5,17 @@ from tsj.models import *
 
 # Serializers define the API representation.
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
-    company_type = serializers.PrimaryKeyRelatedField()
 
     class Meta:
         model = Company
-        fields = ('full_name','post_adress','phone','email','boss_fio',
+        fields = ('company_type', 'full_name','post_adress','phone','email','boss_fio',
         	'inn','orgn','orgn_date','orgn_emitter','kpp','bill_numb',
         	'bank_name','kor_schet','bik','workgraph')
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated, )
 
 class ResidentSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.PrimaryKeyRelatedField()
@@ -29,7 +28,7 @@ class ResidentSerializer(serializers.HyperlinkedModelSerializer):
 class ResidentViewSet(viewsets.ModelViewSet):
     queryset = Resident.objects.all()
     serializer_class = ResidentSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated,)
 
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -40,7 +39,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^api/', include(router.urls)),
     url(r'^$', 'tsj.views.home', name='home'),
-    url(r'^/registration/', 'tsj.views.registeregistration'),
+    url(r'^/registration/', 'tsj.views.registration'),
     url(r'^/register/', 'tsj.views.register'),
     url(r'^admin/', include(admin.site.urls)),
 )
