@@ -40,8 +40,8 @@ urlpatterns = patterns('',
     url(r'^api/', include(router.urls)),
     url(r'^$', 'tsj.views.home', name='home'),
     url(r'^auth/$', 'tsj.views.auth', name='auth'),
-    url(r'^/registration/', 'tsj.views.registration'),
-    url(r'^/register/', 'tsj.views.register'),
+    url(r'^/registration/', 'tsj.views.registration', name="registration"),
+    url(r'^/register/', 'tsj.views.register', name="register"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

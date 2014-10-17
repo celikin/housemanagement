@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate, login
 
 
 def home(request):
-    messages.error(request, 'Нахуй пошел')
     if not request.user.is_authenticated():
         return render(request, "home.html")
     return render(request, "userhome.html")
@@ -27,11 +26,13 @@ def auth(request):
         messages.error(request, 'К сожалению, вы ввели неправильный логин или пароль')
         return redirect(reverse("home"))
 
+
 def registration(request):
 	if request.user.is_authenticated():
 		return redirect(reverse('home'))
 	else:
 		return render(request, "registration.html")
+
 
 def register(request):
 	return redirect(reverse('home'))
