@@ -32,7 +32,7 @@ def auth(request):
 def registration(request):
     if request.user.is_authenticated():
         return redirect(reverse('home'))
-    
+
     form = ResidentForm()
     return render(request, "orgregistration.html", {
         "form": form
@@ -43,13 +43,14 @@ def orgregistration(request):
     if request.user.is_authenticated():
         return redirect(reverse('home'))
     if request.method == "POST":
-        form = CompanyForm(request.POST)
+        form = CompanyForm(request.POST, request.FILES)
         if form.is_valid():
-            user = User(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            user = User(username=form.cleaned_data['username'], password=form.cleaned_data['password'], email=form.cleaned_data['email'])
             user.save()
-            form.cleaned_data['user'] = user
+            company = form.save(commit=False)
+            company.user = user
             messages.success(request, 'Вы успешно зарегестрированы. Ожидайте подтверждения')
-            form.save()
+            company.save()
             return redirect(reverse('home'))
     else:
         form = CompanyForm()

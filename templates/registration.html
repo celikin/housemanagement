@@ -8,7 +8,7 @@
 {% block content %}
 
 	{% block content %}
-		<form method = "post" action="register" action="" class="form-horizontal" role="form">
+		<form method = "post" action="register" action="" enctype="multipart/form-data" class="form-horizontal" role="form">
 		{% csrf_token %}
 		{% for field in form.visible_fields %}
 		<div class="form-group">
