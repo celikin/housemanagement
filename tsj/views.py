@@ -23,7 +23,7 @@ def home(request):
         return render(request, "home.html")
     if is_org(request.user):
         return redirect(reverse("orghome"))
-    return render(request, "userhome.html")
+    return render(request, "user/home.html")
 
 
 def orghome(request):
