@@ -44,6 +44,7 @@ urlpatterns = patterns('',
     url(r'^auth/$', 'tsj.views.auth', name='auth'),
     url(r'^registration/', 'tsj.views.registration', name="registration"),
     url(r'^register/', 'tsj.views.register', name="register"),
+    url(r'^orgrregistration/', 'tsj.views.orgregistration', name="orgregistration"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

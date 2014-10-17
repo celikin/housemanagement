@@ -8,9 +8,7 @@ from django.contrib.auth import authenticate, login
 def home(request):
     if not request.user.is_authenticated():
         return render(request, "home.html")
-    return render(request, "userhome.html", {
-        "section": "home"
-    })
+    return render(request, "userhome.html")
 
 
 def auth(request):
@@ -30,10 +28,22 @@ def auth(request):
 
 
 def registration(request):
-	if request.user.is_authenticated():
-		return redirect(reverse('home'))
-	else:
-		return render(request, "registration.html")
+    if request.user.is_authenticated():
+        return redirect(reverse('home'))
+    else:
+        return render(request, "registration.html")
+
+
+
+def orgregistration(request):
+    if request.user.is_authenticated():
+        return redirect(reverse('home'))
+    if request.method == "POST":
+        pass
+
+    return render(request, "orgregistration.html", {
+        "form": form
+    })
 
 
 def register(request):

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% comment %}
+	ФИО
+	Л/С (реквизит квартиры)
+	Доки (аттач: паспорт и прописка)
+	Телефон
+{% endcomment %}
+{% block content %}
+	<form method = "post" action="register" class="form-horizontal" role="form">
+
+		<div class="form-group">
+			<label for="username" class="col-sm-3 control-label">Имя пользователя:</label>
+			<div class="col-sm-4">
+				<input name="username" class="form-control" placeholder="Введите новое имя пользователя">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="password" class="col-sm-3 control-label">Пароль:</label>
+			<div class="col-sm-4">
+				<input name="password" type="password" class="form-control" placeholder="Придумайте новый пароль">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="first_name" class="col-sm-3 control-label">Имя:</label>
+			<div class="col-sm-4">
+				<input name="first_name" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="last_name" class="col-sm-3 control-label">Фамилия:</label>
+			<div class="col-sm-4">
+				<input name="last_name" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="fathers_name" class="col-sm-3 control-label">Отчество:</label>
+			<div class="col-sm-4">
+				<input name="fathers_name" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="first_name" class="col-sm-3 control-label">Номер лицевого счёта:</label>
+			<div class="col-sm-4">
+				<input name="bill_name" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="phone" class="col-sm-3 control-label">Номер мобильного:</label>
+			<div class="col-sm-4">
+				<input name="phone" type="tel" class="form-control">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="passport_scan" class="col-sm-3 control-label">Скан паспорта:</label>
+			<div class="col-sm-4">
+				<input name="passport_scan" type="file" class="btn-primary" title="Добавить документ" data-filename-placement="inside">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="registration_scan" class="col-sm-3 control-label">Скан прописки:</label>
+			<div class="col-sm-4">
+				<input name="registration_scan" type="file" class="btn-primary" title="Добавить документ" data-filename-placement="inside">
+			</div>
+		</div>
+	</form>
+	<script>
+		$('input[type=file]').bootstrapFileInput();
+	</script>
+{% endblock %}
