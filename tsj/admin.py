@@ -1,3 +1,7 @@
 from django.contrib import admin
+from tsj.models import *
 
-# Register your models here.
+admin.site.register(Company)
+admin.site.register(Resident)
+admin.site.register(House)
+admin.site.register(Street)

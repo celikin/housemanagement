@@ -26,3 +26,12 @@ def auth(request):
     else:
         messages.error(request, 'К сожалению, вы ввели неправильный логин или пароль')
         return redirect(reverse("home"))
+
+def registration(request):
+	if request.user.is_authenticated():
+		return redirect(reverse('home'))
+	else:
+		return render(request, "registration.html")
+
+def register(request):
+	return redirect(reverse('home'))
