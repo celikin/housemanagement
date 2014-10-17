@@ -38,26 +38,30 @@ def registration(request):
         "form": form
     })
 
-
-def orgregistration(request):
+def common_registration(request, Form, template):
     if request.user.is_authenticated():
         return redirect(reverse('home'))
     if request.method == "POST":
-        form = CompanyForm(request.POST, request.FILES)
+        form = Form(request.POST, request.FILES)
         if form.is_valid():
             user = User(username=form.cleaned_data['username'], password=form.cleaned_data['password'], email=form.cleaned_data['email'])
             user.save()
-            company = form.save(commit=False)
-            company.user = user
+            entity = form.save(commit=False)
+            entity.user = user
             messages.success(request, 'Вы успешно зарегестрированы. Ожидайте подтверждения')
             company.save()
             return redirect(reverse('home'))
     else:
-        form = CompanyForm()
-    return render(request, "orgregistration.html", {
+        form = Form()
+    return render(request, template, {
         "form": form
     })
 
 
+def orgregistration(request):
+    return common_registration(request, CompanyForm, 'orgregistration.html')
+
+
+
 def register(request):
-	return redirect(reverse('home'))
+    return common_registration(request, ResidentForm, 'registration.html')
