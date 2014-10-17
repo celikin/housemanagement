@@ -11,6 +11,8 @@ class House(models.Model):
     street = models.ForeignKey(Street)
     number = models.CharField(max_length=4, verbose_name=u'Номер дома')
 
+    def __unicode__(self):
+        return '%s, %s' % (self.street.name, self.number) 
 
 class Company(models.Model):
     TYPIES = (
