@@ -1,0 +1,117 @@
+[
+{
+  "fields": {
+    "name": "\u0422\u0435\u0441\u0442\u043e\u0432\u0430\u044f"
+  },
+  "model": "tsj.street",
+  "pk": 1
+},
+{
+  "fields": {
+    "street": 1,
+    "number": "123"
+  },
+  "model": "tsj.house",
+  "pk": 1
+},
+{
+  "fields": {
+    "street": 1,
+    "number": "123\u0430"
+  },
+  "model": "tsj.house",
+  "pk": 2
+},
+{
+  "fields": {
+    "flat": "23",
+    "first_name": "\u0412\u0430\u0441\u044f",
+    "last_name": "\u041f\u0443\u043f\u043a\u0438\u043d",
+    "middle_name": "\u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432\u0438\u0447",
+    "bill_numb": "11111111123",
+    "house": 1,
+    "phone": "123123",
+    "user": 2,
+    "passport": "scans/\u043f\u0430\u0441\u043f\u043e\u0440\u0442.png",
+    "registration": "scans/\u043f\u0440\u043e\u043f\u0438\u0441\u043a.png"
+  },
+  "model": "tsj.resident",
+  "pk": 1
+},
+{
+  "fields": {
+    "flat": "32",
+    "first_name": "\u041d\u0438\u043a\u0430",
+    "last_name": "\u041b\u0435\u0432\u0438\u043d",
+    "middle_name": "\u0421\u043c\u043e\u0440\u043a\u0430\u0435\u0432\u0438\u0447",
+    "bill_numb": "3333322",
+    "house": 2,
+    "phone": "2222233",
+    "user": 3,
+    "passport": "scans/\u043f\u0430\u0441\u043f\u043e\u0440\u0442_copy.png",
+    "registration": "scans/\u043f\u0440\u043e\u043f\u0438\u0441\u043a_JYTvHEm.png"
+  },
+  "model": "tsj.resident",
+  "pk": 2
+},
+{
+  "fields": {
+    "flat": "222",
+    "first_name": "\u041b\u043e\u043f\u0443\u0448\u043e\u043a",
+    "last_name": "\u041b\u0430\u043b\u0443\u043a",
+    "middle_name": "\u0421\u043c\u0435\u0445\u0430\u0435\u0432\u0438\u0447",
+    "bill_numb": "2174823967",
+    "house": 1,
+    "phone": "123456",
+    "user": 4,
+    "passport": "scans/\u043f\u0430\u0441\u043f\u043e\u0440\u0442_SmnW8is.png",
+    "registration": "scans/\u043f\u0440\u043e\u043f\u0438\u0441\u043a_z5UnOWV.png"
+  },
+  "model": "tsj.resident",
+  "pk": 3
+},
+{
+  "fields": {
+    "legal_adress": "fdkgjfdlkgjfdklgjdfkgldfjgklfdjgl",
+    "kpp": "12345654321",
+    "post_adress": "sdlkgjsdklgfsjdklgjsdklfgjdslk",
+    "name": "\u0422\u0430\u043a\u0438\u0435 \u0434\u0435\u043b\u0430",
+    "bank_name": "12343543",
+    "kor_schet": "2342342343",
+    "company_type": 0,
+    "orgn_date": "2014-10-10",
+    "bik": "3424234324",
+    "boss_fio": "\u0419\u0446\u0443\u043a \u0415\u043d\u0433 \u0418\u0447\u0435\u0448\u0443\u0442\u0441\u044f",
+    "phone": "777771",
+    "inn": "123123213123213",
+    "proof": "scans/\u043f\u0430\u0441\u043f\u043e\u0440\u0442_HZzLWaq.png",
+    "user": 5,
+    "full_name": "\u0412\u043e\u0442 \u0442\u0430\u043a\u0438\u0435 \u0434\u0435\u043b\u0430 \u0438\u043d\u043a.",
+    "orgn": "123213213213123",
+    "orgn_emitter": "\u0439\u0446\u0443\u043a\u0435\u043d\u043a\u0443\u0446\u0439",
+    "workgraph": "\u0412\u0441\u0435\u0433\u0434\u0430",
+    "email": "takie@dela.test",
+    "bill_numb": "1123213123"
+  },
+  "model": "tsj.company",
+  "pk": 1
+},
+{
+  "fields": {
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2014-10-17T19:40:23.371Z",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$vxQhU3S5NDLt$SxI8swzmISd0c2lN2wyDrE4pt72s8ZB1NqHwQOf7uNU=",
+    "email": "admin@test.test",
+    "date_joined": "2014-10-17T19:40:08.944Z"
+  },
+  "model": "auth.user",
+  "pk": 1
+}
+]
