@@ -6,11 +6,15 @@
 	Телефон
 {% endcomment %}
 {% block scripts %}
-<script type="text/javascript">
-$("form input, form textarea, form select").each(function(){
-	$(this).addClass("form-control");
-});
-</script>
+	<script type="text/javascript">
+		$("form input, form textarea, form select").addClass("form-control");
+		$('input[type=file]')
+			.addClass("btn-primary")
+			.attr('title', "Добавить документ")
+			.attr('data-filename-placement', "inside")
+			.bootstrapFileInput();
+
+	</script>
 {% endblock %}
 {% block content %}
 	<form method = "post" action="register" action="" class="form-horizontal" role="form">
@@ -24,11 +28,8 @@ $("form input, form textarea, form select").each(function(){
 	</div>
 	{% endfor %}
 	 <div class="form-group">
-	    <div class="col-sm-offset-2 col-sm-10">
-	    <button type="submit" class="btn btn-default">Регистрация</button>
+	    <div class="col-sm-offset-3 col-sm-10">
+	    <button type="submit" class="btn btn-success">Регистрация</button>
 	 </div>
 	</form>
-	<script>
-		$('input[type=file]').bootstrapFileInput();
-	</script>
 {% endblock %}

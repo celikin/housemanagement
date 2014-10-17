@@ -5,98 +5,36 @@
 	Доки (аттач: паспорт и прописка)
 	Телефон
 {% endcomment %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		$("form input, form textarea, form select").addClass("form-control");
+		$('input[type=file]')
+			.addClass("btn-primary")
+			.attr('title', "Добавить документ")
+			.attr('data-filename-placement', "inside")
+			.bootstrapFileInput();
+
+	</script>
+{% endblock %}
 {% block content %}
 
-	{% block content %}
-		<form method = "post" action="register" action="" class="form-horizontal" role="form">
-		{% csrf_token %}
-		{% for field in form.visible_fields %}
-		<div class="form-group">
-			<label for="{{field.name}}" class="col-sm-3 control-label">{{field.label}}:</label>
-			<div class="col-sm-4">
-				{{field}}
-			</div>
+	<form method = "post" action="register" action="" class="form-horizontal" role="form">
+	{% csrf_token %}
+	{% for field in form.visible_fields %}
+	<div class="form-group">
+		<label for="{{field.name}}" class="col-sm-3 control-label">{{field.label}}:</label>
+		<div class="col-sm-4">
+			{{field}}
 		</div>
-		{% endfor %}
-		 <div class="form-group">
-		    <div class="col-sm-offset-2 col-sm-10">
-		    <button type="submit" class="btn btn-default">Регистрация</button>
-		 </div>
-		</form>
-
-		<script type="text/javascript">
-			$("form input, form textarea, form select").each(function(){
-				$(this).addClass("form-control");
-			});
-			$('input[type=file]').bootstrapFileInput();
-		</script>
-	{% endblock %}
-
-	<form method = "post" action="register" class="form-horizontal" role="form">
-		<div class="form-group">
-			<label for="username" class="col-sm-3 control-label">Имя пользователя:</label>
-			<div class="col-sm-4">
-				<input name="username" class="form-control" placeholder="Введите новое имя пользователя">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="password" class="col-sm-3 control-label">Пароль:</label>
-			<div class="col-sm-4">
-				<input name="password" type="password" class="form-control" placeholder="Придумайте новый пароль">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="first_name" class="col-sm-3 control-label">Имя:</label>
-			<div class="col-sm-4">
-				<input name="first_name" class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="last_name" class="col-sm-3 control-label">Фамилия:</label>
-			<div class="col-sm-4">
-				<input name="last_name" class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="fathers_name" class="col-sm-3 control-label">Отчество:</label>
-			<div class="col-sm-4">
-				<input name="fathers_name" class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="first_name" class="col-sm-3 control-label">Номер лицевого счёта:</label>
-			<div class="col-sm-4">
-				<input name="bill_name" class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="phone" class="col-sm-3 control-label">Номер мобильного:</label>
-			<div class="col-sm-4">
-				<input name="phone" type="tel" class="form-control">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="passport_scan" class="col-sm-3 control-label">Скан паспорта:</label>
-			<div class="col-sm-4">
-				<input name="passport_scan" type="file" class="btn-primary" title="Добавить документ" data-filename-placement="inside">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="registration_scan" class="col-sm-3 control-label">Скан прописки:</label>
-			<div class="col-sm-4">
-				<input name="registration_scan" type="file" class="btn-primary" title="Добавить документ" data-filename-placement="inside">
-			</div>
-		</div>
+	</div>
+	{% endfor %}
+	 <div class="form-group">
+	    <div class="col-sm-offset-3 col-sm-10">
+	    	<button type="submit" class="btn btn-success">Регистрация</button>
+	    </div>
+	 </div>
 	</form>
-	<script>
-		$('input[type=file]').bootstrapFileInput();
-	</script>
+
+
 {% endblock %}

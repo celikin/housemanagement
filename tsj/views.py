@@ -32,7 +32,7 @@ def registration(request):
         return redirect(reverse('home'))
     
     form = ResidentForm()
-    return render(request, "orgregistration.html", {
+    return render(request, "registration.html", {
         "form": form
     })
 
