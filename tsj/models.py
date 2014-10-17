@@ -19,9 +19,9 @@ class Company(models.Model):
         (0, u"ТСЖ"),
         (1, u"УК")
     )
-    company_type = models.IntegerField(choices=TYPIES, default=0)
-    name = models.CharField(max_length=150)
-    full_name = models.CharField(max_length=150)
+    company_type = models.IntegerField(choices=TYPIES, default=0, verbose_name=u"Тип")
+    name = models.CharField(max_length=150, verbose_name=u"Название")
+    full_name = models.CharField(max_length=150, verbose_name=u"Полное наимаенование")
     post_adress = models.TextField(verbose_name=u"Почтовый адрес")
     legal_adress = models.TextField(verbose_name=u"Юридический адрес")
     phone = models.CharField(max_length=15, verbose_name=u"Телефон")
