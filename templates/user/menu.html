@@ -11,6 +11,8 @@
             <ul class="nav navbar-nav">
                 <li {% if current_url == "home" %} class="active" {% endif %}><a href="{% url "home" %}">Панель управления</a></li>
                 <li ><a href="{% url "logoutview" %}">Выход</a></li>
+                <li {% if current_url == "userprofile" %} class="active" {% endif %}><a href="{% url "userprofile" %}">Профиль</a></li>
+
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

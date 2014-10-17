@@ -88,6 +88,13 @@ def orgprofile(request):
     })
 
 
+def userprofile(request):
+    profile = ResidentForm(data=model_to_dict(Resident.objects.get(user=request.user)))
+    return render(request, "user/profile.html", {
+        "profile": profile,
+    })
+
+
 def register(request):
     return common_registration(request, ResidentForm, 'user/registration.html')
 
