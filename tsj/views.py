@@ -63,7 +63,7 @@ def common_registration(request, Form, template):
     if request.method == "POST":
         form = Form(request.POST, request.FILES)
         if form.is_valid():
-            user = User(username=form.cleaned_data['username'], password=form.cleaned_data['password'], email=form.cleaned_data['email'])
+            user = User(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             user.save()
             entity = form.save(commit=False)
             entity.user = user

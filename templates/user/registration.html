@@ -18,7 +18,7 @@
 {% endblock %}
 {% block content %}
 
-	<form method = "post"  action="{% url "register" %}" class="form-horizontal" role="form">
+	<form method = "post"  action="{% url "register" %}" enctype="multipart/form-data"  class="form-horizontal" role="form">
 	{% csrf_token %}
 	{% for field in form.visible_fields %}
 	<div class="form-group {% if field.errors %}has-error{% endif %}">
