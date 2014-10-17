@@ -19,6 +19,7 @@ class Company(models.Model):
         (0, u"ТСЖ"),
         (1, u"УК")
     )
+    user = models.OneToOneField(User)
     company_type = models.IntegerField(choices=TYPIES, default=0, verbose_name=u"Тип")
     name = models.CharField(max_length=150, verbose_name=u"Название")
     full_name = models.CharField(max_length=150, verbose_name=u"Полное наимаенование")

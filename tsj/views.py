@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from .forms import CompanyForm
+from .forms import CompanyForm, ResidentForm
 
 def home(request):
     if not request.user.is_authenticated():
@@ -30,8 +30,11 @@ def auth(request):
 def registration(request):
     if request.user.is_authenticated():
         return redirect(reverse('home'))
-    else:
-        return render(request, "registration.html")
+    
+    form = ResidentForm()
+    return render(request, "orgregistration.html", {
+        "form": form
+    })
 
 
 def orgregistration(request):
