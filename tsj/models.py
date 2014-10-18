@@ -25,8 +25,8 @@ class Company(models.Model):
     company_type = models.IntegerField(choices=TYPIES, default=0, verbose_name=u"Тип")
     name = models.CharField(max_length=150, verbose_name=u"Название")
     full_name = models.CharField(max_length=150, verbose_name=u"Полное наимаенование")
-    post_adress = models.TextField(verbose_name=u"Почтовый адрес")
-    legal_adress = models.TextField(verbose_name=u"Юридический адрес")
+    post_address = models.TextField(verbose_name=u"Почтовый адрес")
+    legal_address = models.TextField(verbose_name=u"Юридический адрес")
     phone = models.CharField(max_length=15, verbose_name=u"Телефон")
     email = models.EmailField(verbose_name=u"E-mail")
     boss_fio = models.CharField(max_length=50, verbose_name=u"ФИО руководителя")
@@ -41,6 +41,9 @@ class Company(models.Model):
     bik = models.CharField(max_length=15, verbose_name=u"БИК")
     workgraph = models.TextField(verbose_name=u"График работы")
     proof = models.FileField(upload_to="scans", verbose_name=u"Подтверждающий документ")
+
+    def get_residents(self):
+        return Resident.objects.filter(house__id__in=self.houses.all())
 
 
 class Resident(models.Model):
@@ -57,6 +60,9 @@ class Resident(models.Model):
 
     def __unicode__(self):
         return u'%s %s (%s, кв. %s)' % (self.first_name, self.last_name)
+
+    def get_tsj_residents(self):
+        return Company.objects.get(house__user=self).get_residents()
 
 
 class Notification(models.Model):
