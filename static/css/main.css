@@ -5,3 +5,9 @@
 .content{
     margin-top: 20px;
 }
+
+#chartdiv {
+	width		: 600px;
+	height		: 500px;
+	font-size	: 11px;
+}							
