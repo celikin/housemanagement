@@ -52,6 +52,11 @@ urlpatterns = patterns('',
     url(r'^org/approve/$', 'tsj.views.userapprove', name="userapprove"),
     url(r'^org/sendwelcome/(?P<pk>\d+)/$', 'tsj.views.sendwelcome', name="sendwelcome"),
     url(r'^org/sendreject/(?P<pk>\d+)/$', 'tsj.views.sendreject', name="sendreject"),
+    url(r'^org/houses/$', 'tsj.views.list_houses', name="list_houses"),
+    url(r'^org/houses/delete/$', 'tsj.views.delete_house', name="delete_house"),
+    url(r'^org/houses/add/$', 'tsj.views.add_house', name="add_houses"),
+    url(r'^org/residents/$', 'tsj.views.list_residents', name="list_residents"),
+    url(r'^org/residents/delete/$', 'tsj.views.delete_resident', name="delete_resident"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

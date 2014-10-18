@@ -54,3 +54,6 @@ class Resident(models.Model):
     bill_numb = models.CharField(max_length=20, verbose_name=u"Номер лицевого счёта")
     passport = models.FileField(upload_to="scans", verbose_name=u"Скан паспорта")
     registration = models.FileField(upload_to="scans", verbose_name=u"Скан прописки")
+
+    def __unicode__(self):
+        return u'%s %s (%s, кв. %s)' % (self.first_name, self.last_name)
