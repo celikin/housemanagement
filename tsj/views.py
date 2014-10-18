@@ -85,7 +85,7 @@ def orgregistration(request):
 
 
 def orgprofile(request):
-    if is_org(request.user):
+    if not is_org(request.user):
         return redirect(reverse("userprofile"))
     profile = CompanyForm(data=model_to_dict(Company.objects.get(user=request.user)))
     return render(request, "org/profile.html", {
