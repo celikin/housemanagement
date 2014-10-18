@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.core.validators import MinValueValidator
 
+
 class Street(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'Название улицы')
 

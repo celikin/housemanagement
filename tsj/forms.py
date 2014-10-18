@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
-from .models import Company, Resident, House, MeterReadingHistory, MeterType, Notification
+from .models import Company, Resident, House, Notification, ServiceCompany, MeterType, MeterReadingHistory
+
 
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
@@ -19,6 +20,11 @@ class AddHouseForm(forms.Form):
 
 class AddResidentForm(forms.Form):
     resident = forms.ChoiceField(label=u"Жилец", choices=((resident.id, resident) for resident in Resident.objects.all()),
+        widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+class AddServiceCompanyForm(forms.Form):
+    service = forms.ChoiceField(label=u"Подрядчик", choices=((service.id, service) for service in ServiceCompany.objects.all()),
         widget=forms.Select(attrs={'class': 'form-control'}))
 
 
