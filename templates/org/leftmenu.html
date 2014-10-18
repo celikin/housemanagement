@@ -4,6 +4,7 @@
     <li {% if current_url == "list_houses" %}class="active"{% endif %}><a href="{% url "list_houses" %}">Список домов</a></li>
     <li {% if current_url == "list_residents" %}class="active"{% endif %}><a href="{% url "list_residents" %}">Список жильцов</a></li>
     <li><a href="#">Сотрудники подрячики</a></li>
+    <li {% if current_url == "create_notification" %}class="active"{% endif %}><a href="{% url "create_notification" %}">Создать оповещение</a></li>
     <li><a href="{% url 'userapprove' %}"><span class="label label-success pull-right">
     1</span>Запросы на регистрацию </a></li>
     <li><a href="#">Оповещения жильцов </a></li>

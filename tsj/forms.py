@@ -3,7 +3,6 @@ from django import forms
 from django.forms import ModelForm
 from .models import Company, Resident, House, MeterReadingHistory, MeterType
 
-
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
     password = forms.CharField(label=u"Пароль", widget=forms.PasswordInput(), required=True)
@@ -19,12 +18,21 @@ class AddHouseForm(forms.Form):
 
 
 class AddResidentForm(forms.Form):
-    resident = forms.ChoiceField(label=u"Дома", choices=((resident.id, resident) for resident in Resident.objects.all()),
+    resident = forms.ChoiceField(label=u"Жилец", choices=((resident.id, resident) for resident in Resident.objects.all()),
         widget=forms.Select(attrs={'class': 'form-control'}))
 
 
-class ResidentForm(ModelForm):
+class AddNotificationForm(forms.Form):
+    notify = forms.IntegerField()
 
+
+class NotifyForm(ModelForm):
+    class Meta:
+        exclude = ["pub_date"]
+        model = Notification
+
+
+class ResidentForm(ModelForm):
     username = forms.CharField(label='Имя пользователя', required=True)
     password = forms.CharField(widget=forms.PasswordInput(), label=u'Пароль', required=True)
 

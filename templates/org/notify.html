@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block menu %}
+{% include "org/menu.html" %}
+{% endblock %}
+{% block content %}
+{% include "org/leftmenu.html" %}
+<div class="col-md-8">
+<table class="table table-bordered">
+{% for notify in notifies %}
+<tr>
+    <td>{{notify.text}}</td>
+    <td>{% for house in notify.houses.all %}{{house}}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+    <td><form action="{% url "delete_notification" %}" method="POST">{% csrf_token %}<input type="hidden" name="notify" value="{{notify.id}}"><button type="submit" class="btn btn-danger">Удалить</button></form></td>
+</tr>
+{% endfor %}
+</table>
+<form role="form" method="POST">
+{% csrf_token %}
+  <div class="form-group">
+    <label for="text">Текст</label>
+    <textarea type="email" class="form-control" name="text" id="text" placeholder="Текст"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="text">Тип нотификации:</label>
+    <select id="id_note_type" class="form-control" name="note_type">
+        <option value="0">Отключение воды</option>
+        <option value="1">Отключение света</option>
+        <option value="2">Собрание</option>
+        <option value="3" selected="selected">Общее</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="text">Отправить жильцам домов:</label>
+    <select id="houses"  multiple class="form-control" name="houses">
+        {% for house in houses %}
+        <option value="{{house.id}}">{{house}}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-success">Отправить</button>
+  </div>
+</form>
+</div>
+{% endblock %}

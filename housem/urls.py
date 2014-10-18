@@ -38,7 +38,7 @@ router.register(r'companies', CompanyViewSet)
 router.register(r'residents', ResidentViewSet)
 
 urlpatterns = patterns('',
-    # Examples:
+
     url(r'^api/', include(router.urls)),
     url(r'^$', 'tsj.views.home', name='home'),
     url(r'^org/home/$', 'tsj.views.orghome', name="orghome"),
@@ -52,6 +52,8 @@ urlpatterns = patterns('',
     url(r'^org/houses/$', 'tsj.views.list_houses', name="list_houses"),
     url(r'^org/houses/delete/$', 'tsj.views.delete_house', name="delete_house"),
     url(r'^org/houses/add/$', 'tsj.views.add_house', name="add_houses"),
+    url(r'^org/create_notification/$', 'tsj.views.create_notification', name="create_notification"),
+    url(r'^org/delete_notification/$', 'tsj.views.delete_notification', name="delete_notification"),
     url(r'^org/residents/$', 'tsj.views.list_residents', name="list_residents"),
     url(r'^org/residents/delete/$', 'tsj.views.delete_resident', name="delete_resident"),
     url(r'^org/approve/$', 'tsj.views.userapprove', name="userapprove"),

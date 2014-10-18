@@ -13,7 +13,10 @@ from django.template.loader import get_template
 from django.template import Context
 from datetime import datetime
 
+
 def is_org(user):
+    if not user.is_authenticated():
+        return False
     try:
         user = Resident.objects.get(user=user)
     except Resident.DoesNotExist:
@@ -101,8 +104,42 @@ def orgprofile(request):
     })
 
 
+def view_notification(request):
+    pass
+
+
+def create_notification(request):
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = NotifyForm(request.POST)
+        if form.is_valid():
+            messages.success(request, "Нотификация успешно отправлена")
+            form.save()
+        else:
+            print form.errors
+    else:
+        form = NotifyForm()
+    return render(request, "org/notify.html", {
+        "form": form,
+        "notifies": Notification.objects.filter(houses__in=request.user.company.houses.all()).prefetch_related().distinct(),
+        "houses": request.user.company.houses.all()
+    })
+
+
+def delete_notification(request):
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = AddNotificationForm(request.POST)
+        if form.is_valid():
+            Notification.objects.filter(houses__company=request.user.company, id=form.cleaned_data['notify']).delete()
+        else:
+            print form.errors
+    return redirect(reverse("create_notification"))
+
+
 def list_houses(request):
-    
     if not is_org(request.user):
         return redirect(reverse("home"))
     return render(request, "org/houses.html", {
@@ -112,7 +149,6 @@ def list_houses(request):
 
 
 def delete_house(request):
-    
     if not is_org(request.user):
         return redirect(reverse("home"))
     if request.method == "POST":
@@ -123,7 +159,6 @@ def delete_house(request):
 
 
 def add_house(request):
-    
     if not is_org(request.user):
         return redirect(reverse("home"))
     if request.method == "POST":
@@ -134,7 +169,6 @@ def add_house(request):
 
 
 def list_residents(request):
-    
     if not is_org(request.user):
         return redirect(reverse("home"))
     return render(request, "org/residents.html", {
@@ -144,13 +178,12 @@ def list_residents(request):
 
 
 def delete_resident(request):
-    
     if not is_org(request.user):
         return redirect(reverse("home"))
     if request.method == "POST":
-        form = AddResidentForm(request.POST)
+        form = AddNotificationForm(request.POST)
         if form.is_valid():
-            Resident.objects.filter(id=form.cleaned_data['resident']).delete()
+            Resident.objects.filter(id=form.cleaned_data['notify'], houses__company=request.user.company).delete()
     return redirect(reverse("list_residents"))
 
 
