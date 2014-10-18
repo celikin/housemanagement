@@ -104,7 +104,7 @@ class MeterReadingHistory(models.Model):
         validators=[
             MinValueValidator(1)
         ])
-    adding_date = models.DateField(default=datetime.datetime.now, verbose_name=u"Дата снятия показаний")
+    adding_date = models.DateField(default=datetime.now, verbose_name=u"Дата снятия показаний")
     meter_type = models.ForeignKey(MeterType)
 
     def __unicode__(self):
