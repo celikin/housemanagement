@@ -48,7 +48,7 @@ class Company(models.Model):
 
 
 class ServiceCompany(Company):
-    user = houses = proof = None
+    user = houses = proof = company_type = None
 
 
 class Resident(models.Model):
