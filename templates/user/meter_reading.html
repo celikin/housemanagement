@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "user/menu.html" %}
+{% endblock %}
+
+{% block content %}
+
+{% include "user/leftmenu.html" %}
+
+	<h2>Ввод показаний</h2>
+	<div class="col-md-8 jumbotron">
+
+    {% if need %}
+      <div class="alert alert-info" role="alert">
+      
+      <h4>В этом месяце вам осталось заполнить:</h4>
+      <p>
+        <ul>
+          {% for n in need %}
+          <li>
+          {{n}}
+          </li>
+          {% endfor %}
+        </ul>
+      </p>
+    </div>  
+		<form method = "post"  action="{% url "meter" %}" enctype="multipart/form-data"  class="form-horizontal" role="form">
+	{% csrf_token %}
+	{% for field in form.visible_fields %}
+	<div class="form-group {% if field.errors %}has-error{% endif %}">
+		<label for="{{field.name}}" class="col-sm-3 control-label">{{field.label}}:</label>
+		<div class="col-sm-4">
+			{{field}}		<span class="help-block">{% if field.errors %}{% for error in field.errors %}{{error}}{% endfor %}{% endif %}</span>
+
+		</div>
+	</div>
+	{% endfor %}
+	 <div class="form-group">
+	    <div class="col-sm-offset-3 col-sm-10">
+	    	<button type="submit" class="btn btn-success">Ввести</button>
+	    </div>
+	 </div>
+	</form>
+      {% else %}
+        <div class="alert alert-success" role="alert">
+           Вы заполнили показания за этот месяц
+        </div>
+      {% endif %}
+	</div>
+
+	<div class="col-md-8">
+  <h2>История показаний</h2>
+  {% if hist %}
+  <table class="table">
+   <thead>
+   		<tr> 
+   			<th>№</th>
+   			{# <th>ФИО</th> #}
+   			<th>Тип</th>
+   			<th>Значение</th>
+   			<th>Дата</th>
+   		</tr>
+   </thead>
+   <tbody>
+   		{% for h in hist %}
+      <tr>
+   			<td>{{ forloop.counter }}</td>
+   			{# <td>{{h.resident.last_name}} {{h.resident.first_name}} {{h.resident.last_name}}</td> #}
+   			<td>{{ h.meter_type.name}}</td>
+   			<td>{{h.value}}</td>
+   			<td>{{h.adding_date}}</td>
+   		{% endfor %}
+      </tr>
+   </tbody>
+  </table>
+  {% else %}
+  	Нет данных
+  {% endif%}
+</div>
+	
+{% endblock %}

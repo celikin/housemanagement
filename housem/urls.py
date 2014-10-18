@@ -57,6 +57,7 @@ urlpatterns = patterns('',
     url(r'^org/approve/$', 'tsj.views.userapprove', name="userapprove"),
     url(r'^org/sendwelcome/(?P<pk>\d+)/$', 'tsj.views.sendwelcome', name="sendwelcome"),
     url(r'^org/sendreject/(?P<pk>\d+)/$', 'tsj.views.sendreject', name="sendreject"),
+    url(r'^meter/$', 'tsj.views.meter', name="meter"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

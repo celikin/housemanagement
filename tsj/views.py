@@ -3,14 +3,15 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm
-from .models import Resident, Company, House
+from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm, MeterForm
+from .models import Resident, Company, House, MeterReadingHistory, MeterType
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.forms.models import model_to_dict
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.template import Context
+from datetime import datetime
 
 def is_org(user):
     try:
@@ -55,7 +56,6 @@ def auth(request):
         messages.error(request, 'К сожалению, вы ввели неправильный логин или пароль')
         return redirect(reverse("home"))
 
-
 def registration(request):
     if request.user.is_authenticated():
         return redirect(reverse('home'))
@@ -74,6 +74,7 @@ def common_registration(request, Form, template):
         if form.is_valid():
             user = User(username=form.cleaned_data['username'])
             user.set_password(form.cleaned_data['password'])
+            user.is_active = False
             user.save()
             entity = form.save(commit=False)
             entity.user = user
@@ -209,3 +210,44 @@ def sendreject(request, pk):
 
 def sendwelcome(request, pk):
 	return sendmail(request, pk, True)
+
+def meter(request):
+
+    if request.method == "POST":
+        form = MeterForm(request.POST)
+        if form.is_valid():
+
+            resident = Resident.objects.get(user=request.user)
+            meter_type = MeterType.objects.get(pk=form.cleaned_data['meter_type'])
+
+            hist = MeterReadingHistory.objects.filter(resident=resident)
+            for h in hist:
+                if h.meter_type==meter_type and datetime.now().strftime("%B")==h.adding_date.strftime("%B"):
+                	messages.error(request, u"Вы уже внесли показания %s за этот месяц, удалите старые" % meter_type.name)
+                	return redirect(reverse('meter'))
+
+            entity = form.save(commit=False)
+            entity.meter_type=meter_type
+            entity.resident = resident
+            messages.success(request, 'Показания приняты')
+            entity.save()
+            return redirect(reverse('meter'))
+    else:
+        form = MeterForm()
+
+    res = Resident.objects.filter(user=request.user)
+    hist = MeterReadingHistory.objects.filter(resident=res)
+    print hist
+
+    have_type = []
+    for h in hist:
+        if datetime.now().strftime("%B")==h.adding_date.strftime("%B"):
+            have_type += [h.meter_type.name]
+
+    need = MeterType.objects.exclude(name__in=have_type)
+    return render(request, "user/meter_reading.html", {
+        "form": form,
+        "hist": hist,
+        "need": need
+    })
+
