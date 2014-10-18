@@ -5,13 +5,37 @@
 {% block content %}
 {% include "org/leftmenu.html" %}
 <div class="col-md-8">
-    <table class="table table-bordered">
-    {% for house in houses %}
+    <table class="table table-striped">
+   
+    <thead>
+        <tr>
+            <th>Дом</th>
+            <th>Управление</th>
+        </tr>
+    </thead>
+    <tbody>
+     {% for house in houses %}
     <tr>
         <td>{{house}}</td>
-        <td><form action="{% url "delete_house" %}" method="POST">{% csrf_token %}<input type="hidden" name="house" value="{{house.id}}"><button type="submit" class="btn btn-danger">Удалить</button></form></td>
+        <td>
+
+        <div class="btn-group">
+    
+        
+            <form action="{% url "delete_house" %}" method="POST">{% csrf_token %}<input type="hidden" name="house" value="{{house.id}}">
+        <a href="{% url 'houseaccount' house.id %}">
+        <button type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-euro"></span></button></a>
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            </form>
+
+        
+        </div>
+        </td>
     </tr>
     {% endfor %}
+    </tbody>
+
     </table>
 <form class="form-inline" action="{% url "add_houses" %}" method="POST" role="form">{% csrf_token %}
     <div class="form-group">

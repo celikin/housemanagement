@@ -2,4 +2,4 @@
 set -x
 ./manage.py makemigrations &&
 	./manage.py migrate &&
-	./manage.py loaddata initial companies arbitrary
+	./manage.py loaddata initial companies srvprov arbitrary

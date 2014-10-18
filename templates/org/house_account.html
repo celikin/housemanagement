@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block menu %}
+{% include "org/menu.html" %}
+{% endblock %}
+{% block content %}
+{% include "org/leftmenu.html" %}
+
+<h2>Ввод показаний</h2>
+	<div class="col-md-8">
+  <div class="jumbotron">
+ 
+		<form method = "post"  action="{% url "houseaccount" pk %}" enctype="multipart/form-data"  class="form-horizontal" role="form">
+	{% csrf_token %}
+	{% for field in form.visible_fields %}
+	<div class="form-group {% if field.errors %}has-error{% endif %}">
+		<label for="{{field.name}}" class="col-sm-3 control-label">{{field.label}}:</label>
+		<div class="col-sm-4">
+			{{field}}		<span class="help-block">{% if field.errors %}{% for error in field.errors %}{{error}}{% endfor %}{% endif %}</span>
+
+		</div>
+	</div>
+	{% endfor %}
+	 <div class="form-group">
+	    <div class="col-sm-offset-3 col-sm-10">
+	    	<button type="submit" class="btn btn-success">Ввести</button>
+	    </div>
+	 </div>
+	</form>
+      </div>
+  <h2>История счета</h2>
+  {% if hist %}
+  <table class="table">
+   <thead>
+   		<tr> 
+   			<th>№</th>
+   			<th>Значение</th>
+   			<th>Дата</th>
+   		</tr>
+   </thead>
+   <tbody>
+   		{% for h in hist %}
+      <tr>
+   			<td>{{ forloop.counter }}</td>
+   			<td>{{h.account_change}}</td>
+   			<td>{{h.pub_date}}</td>
+   		{% endfor %}
+      </tr>
+   </tbody>
+  </table>
+<hr style="border: 1px solid #000;" size="30"> 
+<p><h3>Итого: {{sum}}</h3></p>
+</div>
+
+  {% else %}
+  	Нет данных
+  {% endif%}
+
+</div>
+	
+
+{% endblock %}
