@@ -169,7 +169,7 @@ def logoutview(request):
 
 def userapprove(request):
 	c = Company.objects.get(user=request.user)
-	users = Resident.objects.filter(house__id__in=c.houses.all())
+	users = c.get_residents()
 	return render(request, "org/user_approve.html", {
 		"users": users,
 	})
