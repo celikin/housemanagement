@@ -37,6 +37,9 @@ class BaseCompany(models.Model):
     bik = models.CharField(max_length=15, verbose_name=u"БИК")
     workgraph = models.TextField(verbose_name=u"График работы")
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         abstract = True
 
@@ -90,7 +93,10 @@ class Employer(models.Model):
     last_name = models.CharField(max_length=150, verbose_name=u"Фамилия")
     middle_name = models.CharField(max_length=150, verbose_name=u"Отчество")
     profession = models.CharField(max_length=100, verbose_name=u"Профессия")
-    company = models.OneToOneField(Company)
+    company = models.ForeignKey(Company)
+
+    def __unicode__(self):
+        return self.profession + ' ' + self.first_name
 
 
 class MeterReadingHistory(models.Model):
