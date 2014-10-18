@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm, NotifyForm, AddNotificationForm
-from .models import Resident, Company, House, Notification
+from .models import Resident, Company, House, Notification#, ServiceCompany, AddServiceCompanyForm
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.forms.models import model_to_dict
@@ -96,6 +96,13 @@ def orgprofile(request):
     profile = CompanyForm(data=model_to_dict(Company.objects.get(user=request.user)))
     return render(request, "org/profile.html", {
         "profile": profile,
+    })
+
+
+def add_services(request):
+    return render(request, "org/add_services.html", {
+        "services": ServiceCompany.objects.all(),
+        "form": AddServiceCompanyForm()
     })
 
 
