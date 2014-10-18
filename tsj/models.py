@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
+from datetime import datetime
+from django.core.validators import MinValueValidator
 
 class Street(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'Название улицы')
@@ -71,10 +72,26 @@ class Resident(models.Model):
     registration = models.FileField(upload_to="scans", verbose_name=u"Скан прописки")
 
     def __unicode__(self):
-        return u'%s %s (%s, кв. %s)' % (self.first_name, self.last_name)
+        return u"%s %s (%s, кв. %s)" % (self.first_name, self.last_name, self.house, self.flat)
 
-    def get_tsj_residents(self):
-        return Company.objects.get(house__user=self).get_residents()
+class MeterType(models.Model):
+    name = models.CharField(max_length=100, verbose_name=u"Название")
+    measurment = models.CharField(max_length=20, verbose_name=u"Измеряется в")
+
+    def __unicode__(self):
+        return self.name
+
+class MeterReadingHistory(models.Model):
+    resident = models.ForeignKey(Resident)
+    value = models.IntegerField(verbose_name=u"Значение",
+        validators=[
+            MinValueValidator(1)
+        ])
+    adding_date = models.DateField(default=datetime.now, verbose_name=u"Дата снятия показаний")
+    meter_type = models.ForeignKey(MeterType)
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.resident.last_name, self.value)
 
 
 class Notification(models.Model):
@@ -84,7 +101,7 @@ class Notification(models.Model):
         (2, u"Собрание"),
         (3, u"Общее"),
     )
-    pub_date = models.DateTimeField(default=datetime.datetime.now, verbose_name=u'Дата публикации')
+    pub_date = models.DateTimeField(default=datetime.now, verbose_name=u'Дата публикации')
     text = models.TextField(verbose_name=u"Текст")
     note_type = models.IntegerField(choices=NOTIFICATIONS, default=3, verbose_name=u"Тип")
     houses = models.ManyToManyField(House)

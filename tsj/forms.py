@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
-from .models import Company, Resident, House, Notification
-
+from .models import Company, Resident, House, MeterReadingHistory, MeterType
 
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
@@ -51,3 +50,12 @@ class ResidentForm(ModelForm):
             'bill_numb',
             'passport',
             'registration')
+
+class MeterForm(forms.ModelForm):
+    meter_type = forms.ChoiceField(label=u"Тип счетчика", choices=((types.id, types) for types in MeterType.objects.all()),
+        widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = MeterReadingHistory
+        fields = ('value',)
+    
