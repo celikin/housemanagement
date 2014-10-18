@@ -4,9 +4,13 @@ housemanagment
 #Hackaton #2
 
 #Запуск
-./manage.py makemigrations
-./manage.py migrate
-./manage.py loaddata initial
+	* Простой вариант
+		./manage.py makemigrations
+		./manage.py migrate
+		./manage.py loaddata initial companies arbitrary
+	* Сложный вариант
+		./updatedb.bash
+
 
 #Интерфейс пользователя / фичи
 * Лицевой счет
