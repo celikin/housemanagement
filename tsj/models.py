@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-<<<<<<< HEAD
 from datetime import datetime
 from django.core.validators import MinValueValidator
-=======
-import datetime
->>>>>>> 045869ce41a4a2a797e33723fcb2015ccf32024d
 
 class Street(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'Название улицы')
@@ -98,7 +94,7 @@ class Notification(models.Model):
         (2, u"Собрание"),
         (3, u"Общее"),
     )
-    pub_date = models.DateTimeField(default=datetime.datetime.now, verbose_name=u'Дата публикации')
+    pub_date = models.DateTimeField(default=datetime.now, verbose_name=u'Дата публикации')
     text = models.TextField(verbose_name=u"Текст")
     note_type = models.IntegerField(choices=NOTIFICATIONS, default=3, verbose_name=u"Тип")
     houses = models.ManyToManyField(House)
