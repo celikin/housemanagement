@@ -49,6 +49,9 @@ urlpatterns = patterns('',
     url(r'^registration/$', 'tsj.views.registration', name="registration"),
     url(r'^register/$', 'tsj.views.register', name="register"),
     url(r'^org/registration/$', 'tsj.views.orgregistration', name="orgregistration"),
+    url(r'^org/approve/$', 'tsj.views.userapprove', name="userapprove"),
+    url(r'^org/sendwelcome/(?P<pk>\d+)/$', 'tsj.views.sendwelcome', name="sendwelcome"),
+    url(r'^org/sendreject/(?P<pk>\d+)/$', 'tsj.views.sendreject', name="sendreject"),
     url(r'^admin/', include(admin.site.urls)),
 )
 
