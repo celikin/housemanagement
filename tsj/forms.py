@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
+<<<<<<< HEAD
 from .models import Company, Resident, House, Notification, ServiceCompany, MeterType, MeterReadingHistory
 from .models import Employer
 
+=======
+from .models import Company, Resident, House, MeterReadingHistory, MeterType, Notification, ServiceCompany
+>>>>>>> 864847e2c407276bdb653213772e2f0ad3682912
 
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
