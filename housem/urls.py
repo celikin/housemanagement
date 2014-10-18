@@ -61,6 +61,7 @@ urlpatterns = patterns('',
     url(r'^org/sendwelcome/(?P<pk>\d+)/$', 'tsj.views.sendwelcome', name="sendwelcome"),
     url(r'^org/sendreject/(?P<pk>\d+)/$', 'tsj.views.sendreject', name="sendreject"),
     url(r'^meter/$', 'tsj.views.meter', name="meter"),
+    url(r'^org/houseaccount/(?P<pk>\d+)/$', 'tsj.views.house_account', name="houseaccount"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

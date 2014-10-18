@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
-from .models import Company, Resident, House, MeterReadingHistory, MeterType, Notification, ServiceCompany
+from .models import *
 
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
@@ -64,3 +64,8 @@ class MeterForm(forms.ModelForm):
         model = MeterReadingHistory
         fields = ('value',)
     
+class HouseAccountForm(forms.ModelForm):
+
+    class Meta:
+        model = HouseAccount
+        fields = ('account_change',)

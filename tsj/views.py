@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm, MeterForm, NotifyForm
+from .forms import *
 from .forms import AddServiceCompanyForm, AddNotificationForm
 from .models import Resident, Company, House, Notification, MeterReadingHistory, MeterType
 from .models import ServiceCompany
@@ -299,3 +299,31 @@ def meter(request):
         "chart_data": chart_data,
         "meter_names": MeterType.objects.all()
     })
+
+def house_account(request, pk):
+
+    if request.method == "POST":
+        form = HouseAccountForm(request.POST)
+        if form.is_valid():
+
+            house = House.objects.get(pk=pk)
+            entity = form.save(commit=False)
+            entity.house = house
+            messages.success(request, 'Запись добавлена')
+            entity.save()
+            return redirect(reverse('houseaccount', kwargs={'pk':pk}), )
+    
+    form = HouseAccountForm()
+    house = House.objects.filter(pk=pk)
+    hist = HouseAccount.objects.filter(house=house)
+
+    account = 0
+    for h in hist:
+        account += h.account_change
+
+    return render(request, "org/house_account.html", {
+        "form": form,
+        "hist": hist,
+        "pk": pk,
+        "sum": account,
+	})
