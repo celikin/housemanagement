@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block menu %}
+{% include "org/menu.html" %}
+{% endblock %}
+{% block content %}
+{% include "org/leftmenu.html" %}
+<div class="col-md-8">
+    <table class="table table-bordered">
+    {% for house in houses %}
+    <tr>
+        <td>{{house}}</td>
+        <td><form action="{% url "delete_house" %}" method="POST">{% csrf_token %}<input type="hidden" name="house" value="{{house.id}}"><button type="submit" class="btn btn-danger">Удалить</button></form></td>
+    </tr>
+    {% endfor %}
+    </table>
+<form class="form-inline" action="{% url "add_houses" %}" method="POST" role="form">{% csrf_token %}
+    <div class="form-group">
+        <label class="sr-only" for="house">Дом</label>
+        {{form.house}}
+    </div>
+    <button type="submit" class="btn btn-default">Добавить дом</button>
+</form>
+
+</div>
+{% endblock %}

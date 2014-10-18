@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "org/menu.html" %}
+{% endblock %}
+
+{% block content %}
+	
+{% include "org/leftmenu.html" %}
+	<h3>Пользователи на рассмотрении</h3>
+	<div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ФИО</th>
+                  <th>Дом</th>
+                  <th>Паспорт</th>
+                  <th>Прописка</th>
+                  <th>Решение</th>
+                </tr>
+              </thead>
+              <tbody>
+  				{% for u in users %}
+  					<tr>
+  						<td>{{ u.last_name }} {{ u.first_name }} {{ u.middle_name }}</td>
+  						<td>{{ u.house }}, кв. {{ u.flat }}</td>
+  						<td>
+	  						<a href="{{ u.passport.url }}">
+	  							<img src="{{ u.passport.url }}">
+	  						</a>
+  						</td>
+  						<td>
+  							<a href="{{ u.registration.url }}">
+	  							<img src="{{ u.registration.url }}">
+	  						</a>
+  						</td>
+  						<td> 
+  						<a href="{% url "sendwelcome" u.id %}">
+  							<button type="button" class="btn btn-success">Одобрить</button>
+  						</a>
+  							
+						<a href="{% url "sendreject" u.id %}">
+							<button type="button" class="btn btn-danger">Отклонить</button>
+						</a>
+  							
+  						</td>
+  					</tr>
+				{% endfor%}
+              </tbody>
+            </table>
+          </div>
+
+{% endblock %}

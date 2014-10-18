@@ -12,7 +12,7 @@ class House(models.Model):
     number = models.CharField(max_length=4, verbose_name=u'Номер дома')
 
     def __unicode__(self):
-        return '%s, %s' % (self.street.name, self.number) 
+        return '%s, %s' % (self.street.name, self.number)
 
 
 class Company(models.Model):
@@ -21,6 +21,7 @@ class Company(models.Model):
         (1, u"УК")
     )
     user = models.OneToOneField(User)
+    houses = models.ManyToManyField(House)
     company_type = models.IntegerField(choices=TYPIES, default=0, verbose_name=u"Тип")
     name = models.CharField(max_length=150, verbose_name=u"Название")
     full_name = models.CharField(max_length=150, verbose_name=u"Полное наимаенование")
@@ -41,6 +42,8 @@ class Company(models.Model):
     workgraph = models.TextField(verbose_name=u"График работы")
     proof = models.FileField(upload_to="scans", verbose_name=u"Подтверждающий документ")
 
+    def get_residents(self):
+        return Resident.objects.filter(house__id__in=self.houses.all())
 
 class Resident(models.Model):
     user = models.OneToOneField(User)
@@ -53,3 +56,9 @@ class Resident(models.Model):
     bill_numb = models.CharField(max_length=20, verbose_name=u"Номер лицевого счёта")
     passport = models.FileField(upload_to="scans", verbose_name=u"Скан паспорта")
     registration = models.FileField(upload_to="scans", verbose_name=u"Скан прописки")
+
+    def __unicode__(self):
+        return u'%s %s (%s, кв. %s)' % (self.first_name, self.last_name)
+
+    def get_tsj_residents(self):
+        return Company.objects.get(user=self).get_residents()
