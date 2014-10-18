@@ -48,3 +48,48 @@
 .note .date {
     color:#A5A5A5;
 }
+.week{
+    width: 100%;
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+.week > li {
+    display: inline-block;
+    text-align: center;
+    border-radius: 3px;
+    border:1px solid #ccc;
+}
+.week > li > .dayofweek {
+    padding:4px;
+}
+.week > li > .day {
+    border-top:1px solid #ccc;
+    padding:4px;
+}
+.week > li.nowater > .day{
+    background: #A7C6F5;
+}
+.week > li.nolight > .day{
+    background: #FCE292;
+}
+.week > li.nowater.nolight > .dayofweek{
+    background: #A7C6F5;
+}
+.week > li.nowater.nolight > .day{
+    background: #FCE292;
+}
+.week a{
+    color:Red;
+}
+.demo{
+    padding: 3px;
+    border:1px solid #ccc;
+    border-radius: 3px;
+}
+.demo.light{
+    background: #FCE292;
+}
+.demo.water{
+    background: #A7C6F5;
+}
