@@ -278,9 +278,16 @@ def meter(request):
             have_type += [h.meter_type.name]
 
     need = MeterType.objects.exclude(name__in=have_type)
+
+    chart_data = dict()
+    for t in MeterType.objects.all():
+    	chart_data[t.id] = hist.filter(meter_type=t)
+
     return render(request, "user/meter_reading.html", {
         "form": form,
         "hist": hist,
-        "need": need
+        "need": need,
+        "chart_data": chart_data,
+        "meter_names": MeterType.objects.all()
     })
 

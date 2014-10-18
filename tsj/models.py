@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-<<<<<<< HEAD
-from datetime import datetime
 from django.core.validators import MinValueValidator
-=======
 import datetime
->>>>>>> 045869ce41a4a2a797e33723fcb2015ccf32024d
 
 class Street(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'Название улицы')
@@ -84,7 +80,7 @@ class MeterReadingHistory(models.Model):
         validators=[
             MinValueValidator(1)
         ])
-    adding_date = models.DateField(default=datetime.now, verbose_name=u"Дата снятия показаний")
+    adding_date = models.DateField(default=datetime.datetime.now, verbose_name=u"Дата снятия показаний")
     meter_type = models.ForeignKey(MeterType)
 
     def __unicode__(self):
