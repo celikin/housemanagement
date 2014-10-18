@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
+<<<<<<< HEAD
 from .models import Company, Resident, House, Notification, ServiceCompany, MeterType, MeterReadingHistory
+from .models import Employer
 
+=======
+from .models import Company, Resident, House, MeterReadingHistory, MeterType, Notification, ServiceCompany
+>>>>>>> 864847e2c407276bdb653213772e2f0ad3682912
 
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
@@ -25,6 +30,17 @@ class AddResidentForm(forms.Form):
 
 class AddServiceCompanyForm(forms.Form):
     service = forms.ChoiceField(label=u"Подрядчик", choices=((service.id, service) for service in ServiceCompany.objects.all()),
+        widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+class EmployerForm(ModelForm):
+    class Meta:
+        exclude = ["company"]
+        model = Employer
+
+
+class AddServiceEmployerForm(forms.Form):
+    employer = forms.ChoiceField(label=u"Сотрудник", choices=((employer.id, employer) for employer in Employer.objects.all()),
         widget=forms.Select(attrs={'class': 'form-control'}))
 
 

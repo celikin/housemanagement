@@ -4,13 +4,101 @@
 {% include "org/menu.html" %}
 {% endblock %}
 
+{% block scripts %}
+ 
+  <script type="text/javascript">
+    $(".btn-success").click(function() {
+      if (!confirm('Вы уверены, что хотите внести показания?')) 
+        return false;
+    })
+
+    var chartData = [];
+    {% for key, value in chart_data.iteritems %}       
+     chartData[{{key}}] = [
+        {% for h in value %}
+          {
+             "date": "{{h.adding_date.isoformat}}",
+            "value": {{h.value}}
+          },
+        {% endfor%}
+      ];
+    {% endfor%}
+
+    var chart = AmCharts.makeChart("chartdiv", {
+        "type": "serial",
+        "theme": "patterns",
+        "pathToImages": "http://www.amcharts.com/lib/3/images/",
+        "dataDateFormat": "YYYY-MM-DD",
+        "valueAxes": [{
+            "id":"v1",
+            "axisAlpha": 0,
+            "position": "left"
+        }],
+        "graphs": [{
+      "id": "g1",
+            "bullet": "round",
+            "bulletBorderAlpha": 1,
+            "bulletColor": "#FFFFFF",
+            "bulletSize": 5,
+            "hideBulletsCount": 50,
+            "lineThickness": 2,
+            "title": "red line",
+            "useLineColorForBulletBorder": true,
+            "valueField": "value"
+        }],
+        "chartScrollbar": {
+      "graph": "g1",
+      "scrollbarHeight": 30
+    },
+        "chartCursor": {
+            "cursorPosition": "mouse",
+            "pan": true,
+             "valueLineEnabled":true,
+             "valueLineBalloonEnabled":true
+        },
+        "categoryField": "date",
+        "categoryAxis": {
+            "parseDates": true,
+            "dashLength": 1,
+            "minorGridEnabled": true,
+            "position": "bottom"
+        },
+        exportConfig:{
+          menuRight: '20px',
+          menuBottom: '50px',
+          menuItems: [{
+          icon: 'http://www.amcharts.com/lib/3/images/export.png',
+          format: 'png'   
+          }]  
+        },
+        "dataProvider": chartData[1],
+    }
+  );
+
+
+chart.dataProvider = chartData[1];
+chart.addListener("rendered", zoomChart);
+function selectDataset(d) {
+    chart.dataProvider = chartData[d];
+    chart.validateData();
+    chart.animateAgain();
+}
+
+zoomChart();
+function zoomChart(){
+    chart.zoomToIndexes(chart.dataProvider.length - 10, chart.dataProvider.length - 1);
+}
+
+  </script>
+{% endblock %}
+
 {% block content %}
 
-{% include "org/leftmenu.html" %}
+{% include "user/leftmenu.html" %}
 
 	<h2>Ввод показаний</h2>
-	<div class="col-md-8 jumbotron">
-
+	<div class="col-md-8">
+  <div class="jumbotron">
     {% if need %}
       <div class="alert alert-info" role="alert">
       
@@ -47,9 +135,7 @@
            Вы заполнили показания за этот месяц
         </div>
       {% endif %}
-	</div>
-
-	<div class="col-md-8">
+      </div>
   <h2>История показаний</h2>
   {% if hist %}
   <table class="table">
@@ -74,9 +160,27 @@
       </tr>
    </tbody>
   </table>
+  <div class="panel panel-default">
+  <div class="panel-heading">
+    <div id="selector">Выберете счетчик:
+    {% for m in meter_names %}
+     <label>
+      <input type="radio" value="{{m.id}}" name="dataset" onclick="selectDataset({{m.id}});"> {{m.name}}
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="panel-body">
+     <div id="chartdiv"></div>
+  </div>
+</div>
+    
+
   {% else %}
   	Нет данных
   {% endif%}
+
 </div>
 	
+
 {% endblock %}

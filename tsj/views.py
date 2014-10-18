@@ -4,9 +4,9 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm, MeterForm, NotifyForm
-from .forms import AddServiceCompanyForm, AddNotificationForm
+from .forms import AddServiceCompanyForm, AddNotificationForm, EmployerForm, AddServiceEmployerForm
 from .models import Resident, Company, House, Notification, MeterReadingHistory, MeterType
-from .models import ServiceCompany
+from .models import ServiceCompany, Employer
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.forms.models import model_to_dict
@@ -107,10 +107,53 @@ def orgprofile(request):
 
 
 def add_services(request):
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = AddServiceCompanyForm(request.POST)
+        if form.is_valid():
+            request.user.company.services.add(ServiceCompany.objects.get(id=form.cleaned_data['service']))
+    else:
+        form = AddServiceCompanyForm()
     return render(request, "org/add_services.html", {
-        "services": ServiceCompany.objects.all(),
-        "form": AddServiceCompanyForm()
+        "services":  request.user.company.services.all(),
+        "employers":  request.user.company.employer_set.all(),
+        "form": form,
+        "emplform": EmployerForm(),
     })
+
+
+def add_employer(request):
+    if request.method == "POST":
+        form = EmployerForm(request.POST)
+        if form.is_valid():
+            emp = form.save(commit=False)
+            emp.company = request.user.company
+            emp.save()
+    return redirect("add_services")
+
+
+def delete_employer(request):
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = AddServiceEmployerForm(request.POST)
+        if form.is_valid():
+            request.user.company.employers.remove(Employer.objects.get(id=form.cleaned_data['employer']))
+    return redirect(reverse("add_services"))
+
+
+def delete_services(request):
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = AddServiceCompanyForm(request.POST)
+        if form.is_valid():
+            print 'yay'
+            request.user.company.services.remove(ServiceCompany.objects.get(id=form.cleaned_data['service']))
+        else:
+            print form.errors
+    return redirect(reverse("add_services"))
 
 
 def view_notification(request):
@@ -287,8 +330,15 @@ def meter(request):
             have_type += [h.meter_type.name]
 
     need = MeterType.objects.exclude(name__in=have_type)
+
+    chart_data = dict()
+    for t in MeterType.objects.all():
+    	chart_data[t.id] = hist.filter(meter_type=t)
+
     return render(request, "user/meter_reading.html", {
         "form": form,
         "hist": hist,
-        "need": need
+        "need": need,
+        "chart_data": chart_data,
+        "meter_names": MeterType.objects.all()
     })
