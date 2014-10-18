@@ -1,0 +1,127 @@
+[
+{
+  "fields": {
+    "name": "\u0422\u0435\u0441\u0442\u043e\u0432\u0430\u044f"
+  },
+  "model": "tsj.street",
+  "pk": 1
+},
+{
+  "fields": {
+    "street": 1,
+    "number": "123"
+  },
+  "model": "tsj.house",
+  "pk": 1
+},
+{
+  "fields": {
+    "street": 1,
+    "number": "123\u0430"
+  },
+  "model": "tsj.house",
+  "pk": 2
+},
+{
+  "fields": {
+    "flat": "23",
+    "first_name": "\u0412\u0430\u0441\u044f",
+    "last_name": "\u041f\u0443\u043f\u043a\u0438\u043d",
+    "middle_name": "\u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432\u0438\u0447",
+    "bill_numb": "11111111123",
+    "house": 1,
+    "phone": "123123",
+    "user": 701,
+    "passport": "scans/\u043f\u0430\u0441\u043f\u043e\u0440\u0442.png",
+    "registration": "scans/\u043f\u0440\u043e\u043f\u0438\u0441\u043a.png"
+  },
+  "model": "tsj.resident",
+  "pk": 1
+},
+{
+  "fields": {
+    "flat": "32",
+    "first_name": "\u041d\u0438\u043a\u0430",
+    "last_name": "\u041b\u0435\u0432\u0438\u043d",
+    "middle_name": "\u0421\u043c\u043e\u0440\u043a\u0430\u0435\u0432\u0438\u0447",
+    "bill_numb": "3333322",
+    "house": 2,
+    "phone": "2222233",
+    "user": 702,
+    "passport": "scans/\u043f\u0430\u0441\u043f\u043e\u0440\u0442_copy.png",
+    "registration": "scans/\u043f\u0440\u043e\u043f\u0438\u0441\u043a_JYTvHEm.png"
+  },
+  "model": "tsj.resident",
+  "pk": 2
+},
+{
+  "fields": {
+    "flat": "222",
+    "first_name": "\u041b\u043e\u043f\u0443\u0448\u043e\u043a",
+    "last_name": "\u041b\u0430\u043b\u0443\u043a",
+    "middle_name": "\u0421\u043c\u0435\u0445\u0430\u0435\u0432\u0438\u0447",
+    "bill_numb": "2174823967",
+    "house": 1,
+    "phone": "123456",
+    "user": 703,
+    "passport": "scans/\u043f\u0430\u0441\u043f\u043e\u0440\u0442_SmnW8is.png",
+    "registration": "scans/\u043f\u0440\u043e\u043f\u0438\u0441\u043a_z5UnOWV.png"
+  },
+  "model": "tsj.resident",
+  "pk": 3
+},
+{
+  "fields": {
+    "username": "test1",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2014-10-17T19:40:23.371Z",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$vxQhU3S5NDLt$SxI8swzmISd0c2lN2wyDrE4pt72s8ZB1NqHwQOf7uNU=",
+    "email": "admin@test.test",
+    "date_joined": "2014-10-17T19:40:08.944Z"
+  },
+  "model": "auth.user",
+  "pk": 701
+},
+{
+  "fields": {
+    "username": "test2",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2014-10-17T19:40:23.371Z",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$vxQhU3S5NDLt$SxI8swzmISd0c2lN2wyDrE4pt72s8ZB1NqHwQOf7uNU=",
+    "email": "admin@test.test",
+    "date_joined": "2014-10-17T19:40:08.944Z"
+  },
+  "model": "auth.user",
+  "pk": 702
+},
+{
+  "fields": {
+    "username": "test3",
+    "first_name": "",
+    "last_name": "",
+    "is_active": true,
+    "is_superuser": true,
+    "is_staff": true,
+    "last_login": "2014-10-17T19:40:23.371Z",
+    "groups": [],
+    "user_permissions": [],
+    "password": "pbkdf2_sha256$12000$vxQhU3S5NDLt$SxI8swzmISd0c2lN2wyDrE4pt72s8ZB1NqHwQOf7uNU=",
+    "email": "admin@test.test",
+    "date_joined": "2014-10-17T19:40:08.944Z"
+  },
+  "model": "auth.user",
+  "pk": 703
+}
+]
