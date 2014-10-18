@@ -41,9 +41,14 @@ class Company(models.Model):
     bik = models.CharField(max_length=15, verbose_name=u"БИК")
     workgraph = models.TextField(verbose_name=u"График работы")
     proof = models.FileField(upload_to="scans", verbose_name=u"Подтверждающий документ")
+    service = models.ManyToManyField("ServiceCompany")
 
     def get_residents(self):
         return Resident.objects.filter(house__id__in=self.houses.all())
+
+
+class ServiceCompany(Company):
+    user = houses = proof = None
 
 
 class Resident(models.Model):
