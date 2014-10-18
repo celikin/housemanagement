@@ -15,6 +15,10 @@ class House(models.Model):
     def __unicode__(self):
         return '%s, %s' % (self.street.name, self.number)
 
+class HouseAccount(models.Model):
+    house = models.ForeignKey(House)
+    account_change = models.FloatField(verbose_name=u"Величина изменения")
+    pub_date = models.DateField(default=datetime.now, verbose_name=u"Дата публикации")
 
 class BaseCompany(models.Model):
     name = models.CharField(max_length=150, verbose_name=u"Название")
