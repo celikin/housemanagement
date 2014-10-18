@@ -49,6 +49,11 @@ urlpatterns = patterns('',
     url(r'^registration/$', 'tsj.views.registration', name="registration"),
     url(r'^register/$', 'tsj.views.register', name="register"),
     url(r'^org/registration/$', 'tsj.views.orgregistration', name="orgregistration"),
+    url(r'^org/houses/$', 'tsj.views.list_houses', name="list_houses"),
+    url(r'^org/houses/delete/$', 'tsj.views.delete_house', name="delete_house"),
+    url(r'^org/houses/add/$', 'tsj.views.add_house', name="add_houses"),
+    url(r'^org/residents/$', 'tsj.views.list_residents', name="list_residents"),
+    url(r'^org/residents/delete/$', 'tsj.views.delete_resident', name="delete_resident"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

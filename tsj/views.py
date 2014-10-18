@@ -3,12 +3,11 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from .forms import CompanyForm, ResidentForm
-from .models import Resident, Company
+from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm
+from .models import Resident, Company, House
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.forms.models import model_to_dict
-
 
 def is_org(user):
     try:
@@ -28,6 +27,9 @@ def home(request):
 
 def orghome(request):
     if not request.user.is_authenticated() or not is_org(request.user):
+        return redirect(reverse("home"))
+
+    if not is_org(request.user):
         return redirect(reverse("home"))
     return render(request, "org/home.html")
 
@@ -83,13 +85,70 @@ def orgregistration(request):
 
 
 def orgprofile(request):
+    if is_org(request.user):
+        return redirect(reverse("userprofile"))
     profile = CompanyForm(data=model_to_dict(Company.objects.get(user=request.user)))
     return render(request, "org/profile.html", {
         "profile": profile,
     })
 
 
+def list_houses(request):
+    
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    return render(request, "org/houses.html", {
+        "houses": request.user.company.houses.all(),
+        "form": AddHouseForm(),
+    })
+
+
+def delete_house(request):
+    
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = AddHouseForm(request.POST)
+        if form.is_valid():
+            request.user.company.houses.remove(House.objects.get(id=form.cleaned_data['house']))
+    return redirect(reverse("list_houses"))
+
+
+def add_house(request):
+    
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = AddHouseForm(request.POST)
+        if form.is_valid():
+            request.user.company.houses.add(House.objects.get(id=form.cleaned_data['house']))
+    return redirect(reverse("list_houses"))
+
+
+def list_residents(request):
+    
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    return render(request, "org/residents.html", {
+        "residents": Resident.objects.filter(house__id__in=request.user.company.houses.all()),
+        "form": AddResidentForm(),
+    })
+
+
+def delete_resident(request):
+    
+    if not is_org(request.user):
+        return redirect(reverse("home"))
+    if request.method == "POST":
+        form = AddResidentForm(request.POST)
+        if form.is_valid():
+            Resident.objects.filter(id=form.cleaned_data['resident']).delete()
+    return redirect(reverse("list_residents"))
+
+
 def userprofile(request):
+    if is_org(request.user):
+        return redirect(reverse("orghome"))
     profile = ResidentForm(data=model_to_dict(Resident.objects.get(user=request.user)))
     return render(request, "user/profile.html", {
         "profile": profile,

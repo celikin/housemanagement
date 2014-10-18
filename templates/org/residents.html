@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block menu %}
+{% include "org/menu.html" %}
+{% endblock %}
+{% block content %}
+{% include "org/leftmenu.html" %}
+<div class="col-md-8">
+    <table class="table table-bordered">
+    {% for resident in residents %}
+    <tr>
+        <td>{{resident.first_name}}{{resident.last_name}}</td>
+        <td>{{resident.house}}, кв. {{resident.flat}}</td>
+        <td><form action="{% url "delete_resident" %}" method="POST">{% csrf_token %}<input type="hidden" name="resident" value="{{resident.id}}"><button type="submit" class="btn btn-danger">Удалить</button></form></td>
+    </tr>
+    {% endfor %}
+    </table>
+
+</div>
+{% endblock %}
