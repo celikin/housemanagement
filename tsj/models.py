@@ -74,12 +74,23 @@ class Resident(models.Model):
     def __unicode__(self):
         return u"%s %s (%s, кв. %s)" % (self.first_name, self.last_name, self.house, self.flat)
 
+
 class MeterType(models.Model):
     name = models.CharField(max_length=100, verbose_name=u"Название")
     measurment = models.CharField(max_length=20, verbose_name=u"Измеряется в")
 
     def __unicode__(self):
         return self.name
+
+
+class Employer(models.Model):
+    phone = models.CharField(max_length=15, verbose_name=u"Телефон")
+    first_name = models.CharField(max_length=150, verbose_name=u"Имя")
+    last_name = models.CharField(max_length=150, verbose_name=u"Фамилия")
+    middle_name = models.CharField(max_length=150, verbose_name=u"Отчество")
+    profession = models.CharField(max_length=100, verbose_name=u"Профессия")
+    company = models.OneToOneField(Company)
+
 
 class MeterReadingHistory(models.Model):
     resident = models.ForeignKey(Resident)
