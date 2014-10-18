@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm, MeterForm
+from .forms import CompanyForm, ResidentForm, AddHouseForm, AddResidentForm, MeterForm, NotifyForm, AddNotificationForm
 from .models import Resident, Company, House, Notification, MeterReadingHistory, MeterType
 from django.contrib.auth.models import User
 from django.contrib.auth import logout

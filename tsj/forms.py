@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import ModelForm
-from .models import Company, Resident, House, MeterReadingHistory, MeterType
+from .models import Company, Resident, House, MeterReadingHistory, MeterType, Notification
 
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
