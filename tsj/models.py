@@ -15,14 +15,8 @@ class House(models.Model):
         return '%s, %s' % (self.street.name, self.number)
 
 
-class Company(models.Model):
-    TYPIES = (
-        (0, u"ТСЖ"),
-        (1, u"УК")
-    )
-    user = models.OneToOneField(User)
-    houses = models.ManyToManyField(House)
-    company_type = models.IntegerField(choices=TYPIES, default=0, verbose_name=u"Тип")
+class BaseCompany(models.Model):
+
     name = models.CharField(max_length=150, verbose_name=u"Название")
     full_name = models.CharField(max_length=150, verbose_name=u"Полное наимаенование")
     post_address = models.TextField(verbose_name=u"Почтовый адрес")
@@ -40,15 +34,28 @@ class Company(models.Model):
     kor_schet = models.CharField(max_length=15, verbose_name=u"Кор. счет")
     bik = models.CharField(max_length=15, verbose_name=u"БИК")
     workgraph = models.TextField(verbose_name=u"График работы")
+
+    class Meta:
+        abstract = True
+
+
+class Company(BaseCompany):
+    TYPIES = (
+        (0, u"ТСЖ"),
+        (1, u"УК")
+    )
+    user = models.OneToOneField(User)
+    houses = models.ManyToManyField(House)
+    company_type = models.IntegerField(choices=TYPIES, default=0, verbose_name=u"Тип")
     proof = models.FileField(upload_to="scans", verbose_name=u"Подтверждающий документ")
-    service = models.ManyToManyField("ServiceCompany")
+    services = models.ManyToManyField("ServiceCompany", related_name="%(app_label)s_%(class)s_related")
 
     def get_residents(self):
         return Resident.objects.filter(house__id__in=self.houses.all())
 
 
-class ServiceCompany(Company):
-    user = houses = proof = company_type = None
+class ServiceCompany(BaseCompany):
+    pass
 
 
 class Resident(models.Model):
