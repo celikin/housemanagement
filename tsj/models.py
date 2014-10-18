@@ -42,6 +42,8 @@ class Company(models.Model):
     workgraph = models.TextField(verbose_name=u"График работы")
     proof = models.FileField(upload_to="scans", verbose_name=u"Подтверждающий документ")
 
+    def get_residents(self):
+        return Resident.objects.filter(house__id__in=self.houses.all())
 
 class Resident(models.Model):
     user = models.OneToOneField(User)
@@ -57,3 +59,6 @@ class Resident(models.Model):
 
     def __unicode__(self):
         return u'%s %s (%s, кв. %s)' % (self.first_name, self.last_name)
+
+    def get_tsj_residents(self):
+        return Company.objects.get(user=self).get_residents()
