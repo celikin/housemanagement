@@ -8,6 +8,9 @@ from .models import Resident, Company, House
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.forms.models import model_to_dict
+from django.core.mail import send_mail
+from django.template.loader import get_template
+from django.template import Context
 
 def is_org(user):
     try:
@@ -162,3 +165,43 @@ def register(request):
 def logoutview(request):
     logout(request)
     return redirect(reverse('home'))
+
+def userapprove(request):
+	c = Company.objects.get(user=request.user)
+	users = Resident.objects.filter(house__id__in=c.houses.all())
+	return render(request, "org/user_approve.html", {
+		"users": users,
+	})
+
+def sendmail(request, pk, state):
+
+	user = Resident.objects.get(pk=pk)
+	name = user.last_name + " " + user.first_name
+	email = user.user.email
+
+	if state:
+		path = "welcome_email.html"
+		user.user.is_active = True
+		user.user.save()
+	else:
+		path = "reject_email.html"
+		user.delete()
+
+	send_mail(
+		'Cпасибо за регистрацию',
+		get_template(path).render(
+			Context({
+				'username': name,
+			})
+		),
+		'larkina.bad@gmail.com',
+		[email],
+		fail_silently = False
+	)
+	return userapprove(request)
+
+def sendreject(request, pk):
+	return sendmail(request, pk, False)
+
+def sendwelcome(request, pk):
+	return userapprove(request, pk, True)
