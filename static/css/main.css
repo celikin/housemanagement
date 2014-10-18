@@ -10,4 +10,41 @@
 	width		: 600px;
 	height		: 500px;
 	font-size	: 11px;
-}							
+}
+/* Dashboard */
+.profile{
+    padding: 5px;
+    border-radius: 5px;
+    background:#F8F8F8;
+    color:#000;
+}
+.name{
+    font-weight: bold;
+    font-size:25px;
+}
+.bill_numb{
+    font-style: italic;
+    font-size: 13px
+}
+.bill{
+    font-size: 28px;
+    font-weight: bold;
+}
+.bill.positive{
+    color:#35B353;
+}
+.bill.positive::before{
+    content:'+';
+}
+.bill.negative{
+    color:#D62D2D;
+}
+.bill.negative::before{
+    content:'-';
+}
+.bill .date{
+    font-style: italic;
+}
+.note .date {
+    color:#A5A5A5;
+}

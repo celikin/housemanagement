@@ -31,7 +31,11 @@ def home(request):
         return render(request, "home.html")
     if is_org(request.user):
         return redirect(reverse("orghome"))
-    return render(request, "user/home.html")
+    return render(request, "user/home.html", {
+        "resident": request.user.resident,
+        "notifications": request.user.resident.house.notification_set.all(),
+        "org": request.user.resident.house.company_set.all()[0],
+    })
 
 
 def orghome(request):

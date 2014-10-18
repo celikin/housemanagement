@@ -56,6 +56,9 @@ class Company(BaseCompany):
     proof = models.FileField(upload_to="scans", verbose_name=u"Подтверждающий документ")
     services = models.ManyToManyField("ServiceCompany", related_name="%(app_label)s_%(class)s_related")
 
+    def get_company_type(self):
+        return dict(self.TYPIES)[self.company_type]
+
     def get_residents(self):
         return Resident.objects.filter(house__id__in=self.houses.all())
 
@@ -97,15 +100,13 @@ class Employer(models.Model):
     company = models.ForeignKey(Company, verbose_name=u"Компания")
 
     def __unicode__(self):
-        return self.profession + ' ' + self.first_name
-
-    def __unicode__(self):
         return u"%s %s" % (self.first_name, self.last_name)
+
 
 class MeterReadingHistory(models.Model):
     resident = models.ForeignKey(Resident)
     value = models.IntegerField(verbose_name=u"Значение",
-        validators=[
+        validators = [
             MinValueValidator(1)
         ])
     adding_date = models.DateField(default=datetime.now, verbose_name=u"Дата снятия показаний")

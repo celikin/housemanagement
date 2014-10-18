@@ -4,4 +4,36 @@
 {% endblock %}
 {% block content %}
 {% include "user/leftmenu.html" %}
+<div class="col-md-10">
+<div class="grid">
+    <div class="col-md-3">
+        <div class="bill positive">942,84  <i class="fa fa-rub"></i></div>
+        <div class="date">Состояние на <strong>19.10.2014</strong></div>
+        <div>120 <i class="fa fa-rub"></i> кВт/ч, 33 <i class="fa fa-rub"></i> м<sup>3</sup> </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-4">
+        <div class="profile">
+            <div class="name">{{org.get_company_type}} «{{org}}»</div>
+            <div class="bill_numb">тел.: {{org.phone}}</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="profile">
+            <div class="name">{{resident.first_name}} {{resident.last_name}} (кв. {{resident.flat}})</div>
+            <div class="bill_numb">Л/C №{{resident.bill_numb}}</div>
+            <div><a href="{% url "userprofile" %}">Профиль</a></div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <h2>Уведомления от {{org.get_company_type}}</h2>
+        {% for note in notifications %}
+        <div class="note">
+            <div class="date">{{note.pub_date|date:"j E"}}, <nobr>{{note.pub_date|date:"Y"}}</nobr></div>
+            {{note.text}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
