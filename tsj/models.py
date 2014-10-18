@@ -4,16 +4,15 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.core.validators import MinValueValidator
 
-class Street(models.Model):
-    name = models.CharField(max_length=50, verbose_name=u'Название улицы')
+from .streets import STREET_CHOICES
 
 
 class House(models.Model):
-    street = models.ForeignKey(Street)
+    street = models.IntegerField(choices=STREET_CHOICES, verbose_name=u'Улица')
     number = models.CharField(max_length=4, verbose_name=u'Номер дома')
 
     def __unicode__(self):
-        return '%s, %s' % (self.street.name, self.number)
+        return '%s, %s' % (self.get_street_display(), self.number)
 
 class HouseAccount(models.Model):
     house = models.ForeignKey(House)
