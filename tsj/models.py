@@ -18,7 +18,6 @@ class House(models.Model):
 
 
 class BaseCompany(models.Model):
-
     name = models.CharField(max_length=150, verbose_name=u"Название")
     full_name = models.CharField(max_length=150, verbose_name=u"Полное наимаенование")
     post_address = models.TextField(verbose_name=u"Почтовый адрес")
@@ -39,6 +38,9 @@ class BaseCompany(models.Model):
 
     class Meta:
         abstract = True
+
+    def __unicode__(self):
+        return self.name
 
 
 class Company(BaseCompany):
@@ -90,8 +92,10 @@ class Employer(models.Model):
     last_name = models.CharField(max_length=150, verbose_name=u"Фамилия")
     middle_name = models.CharField(max_length=150, verbose_name=u"Отчество")
     profession = models.CharField(max_length=100, verbose_name=u"Профессия")
-    company = models.OneToOneField(Company)
+    company = models.ForeignKey(Company, verbose_name=u"Компания")
 
+    def __unicode__(self):
+        return u"%s %s" % (self.first_name, self.last_name)
 
 class MeterReadingHistory(models.Model):
     resident = models.ForeignKey(Resident)
