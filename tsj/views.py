@@ -48,6 +48,9 @@ def auth(request):
         if user.is_active:
             login(request, user)
             return redirect(reverse("home"))
+        else:
+        	messages.error(request, "Ваш аккаунт еще не подтвержден")
+        	return redirect(reverse("home"))
     else:
         messages.error(request, 'К сожалению, вы ввели неправильный логин или пароль')
         return redirect(reverse("home"))
@@ -69,7 +72,8 @@ def common_registration(request, Form, template):
     if request.method == "POST":
         form = Form(request.POST, request.FILES)
         if form.is_valid():
-            user = User(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            user = User(username=form.cleaned_data['username'])
+            user.set_password(form.cleaned_data['password'])
             user.save()
             entity = form.save(commit=False)
             entity.user = user
@@ -168,7 +172,7 @@ def logoutview(request):
 
 def userapprove(request):
 	c = Company.objects.get(user=request.user)
-	users = c.get_residents()
+	users = c.get_residents().filter(user__is_active=False)
 	return render(request, "org/user_approve.html", {
 		"users": users,
 	})
@@ -204,4 +208,4 @@ def sendreject(request, pk):
 	return sendmail(request, pk, False)
 
 def sendwelcome(request, pk):
-	return userapprove(request, pk, True)
+	return sendmail(request, pk, True)
