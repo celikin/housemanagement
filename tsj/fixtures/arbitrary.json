@@ -214,5 +214,30 @@
   },
   "model": "tsj.servicecompany",
   "pk": 2
+},
+{
+  "fields": {
+    "first_name": "\u0412\u0430\u0441\u044f",
+    "last_name": "\u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432",
+    "middle_name": "\u0412\u0430\u0441\u0438\u043b\u044c\u0435\u0432\u0438\u0447",
+    "company": 3,
+    "profession": "\u0421\u0430\u043d\u0442\u0435\u0445\u043d\u0438\u043a",
+    "phone": "123131"
+  },
+  "model": "tsj.employer",
+  "pk": 1
+},
+{
+  "fields": {
+    "first_name": "\u041d\u0430\u0442\u0430\u043b\u044c\u044f",
+    "last_name": "\u041e\u0433\u043d\u0451\u0432\u0430",
+    "middle_name": "\u0421\u0435\u0440\u0433\u0435\u0435\u0432\u043d\u0430",
+    "company": 3,
+    "profession": "\u042d\u043b\u0435\u043a\u0442\u0440\u0438\u043a",
+    "phone": "12342341"
+  },
+  "model": "tsj.employer",
+  "pk": 2
 }
+
 ]
