@@ -94,14 +94,10 @@ class Employer(models.Model):
     last_name = models.CharField(max_length=150, verbose_name=u"Фамилия")
     middle_name = models.CharField(max_length=150, verbose_name=u"Отчество")
     profession = models.CharField(max_length=100, verbose_name=u"Профессия")
-<<<<<<< HEAD
     company = models.ForeignKey(Company, verbose_name=u"Компания")
-=======
-    company = models.ForeignKey(Company)
 
     def __unicode__(self):
         return self.profession + ' ' + self.first_name
->>>>>>> 864847e2c407276bdb653213772e2f0ad3682912
 
     def __unicode__(self):
         return u"%s %s" % (self.first_name, self.last_name)
