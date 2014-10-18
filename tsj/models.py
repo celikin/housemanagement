@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-
+import datetime
 
 class Street(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'Название улицы')
@@ -57,3 +57,16 @@ class Resident(models.Model):
 
     def __unicode__(self):
         return u'%s %s (%s, кв. %s)' % (self.first_name, self.last_name)
+
+
+class Notification(models.Model):
+    NOTIFICATIONS = (
+        (0, u"Отключение воды"),
+        (1, u"Отключение света"),
+        (2, u"Собрание"),
+        (3, u"Общее"),
+    )
+    pub_date = models.DateTimeField(default=datetime.datetime.now, verbose_name=u'Дата публикации')
+    text = models.TextField(verbose_name=u"Текст")
+    note_type = models.IntegerField(choices=NOTIFICATIONS, default=3, verbose_name=u"Тип")
+    houses = models.ManyToManyField(House)
