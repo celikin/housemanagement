@@ -1,13 +1,6 @@
 [
 {
   "fields": {
-    "name": "\u0422\u0435\u0441\u0442\u043e\u0432\u0430\u044f"
-  },
-  "model": "tsj.street",
-  "pk": 1
-},
-{
-  "fields": {
     "street": 1,
     "number": "123"
   },

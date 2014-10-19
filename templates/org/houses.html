@@ -37,13 +37,25 @@
     </tbody>
 
     </table>
+    Пока нет ни одного дома. Вы можете добавить управляемые дома ниже
+
 <form class="form-inline" action="{% url "add_houses" %}" method="POST" role="form">{% csrf_token %}
     <div class="form-group">
-        <label class="sr-only" for="house">Дом</label>
-        {{form.house}}
+        <label class="sr-only" for="street">Дом</label>
+        {{form.street}}
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="house">Номер</label>
+        {{form.number}}
     </div>
     <button type="submit" class="btn btn-default">Добавить дом</button>
 </form>
 
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $("#id_street").autocomplete()
+</script>
 {% endblock %}

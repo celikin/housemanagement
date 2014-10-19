@@ -2,6 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 from .models import *
+from .streets import STREET_CHOICES
 
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
@@ -12,9 +13,12 @@ class CompanyForm(ModelForm):
         exclude = ('user',)
 
 
-class AddHouseForm(forms.Form):
-    house = forms.ChoiceField(label=u"Дома", choices=((house.id, house) for house in House.objects.all()),
-        widget=forms.Select(attrs={'class': 'form-control'}))
+class AddHouseForm(ModelForm):
+    #house = forms.ChoiceField(label=u"Дома", choices=STREET_CHOICES,#((house.id, house) for house in House.objects.all()),
+    #    widget=forms.Select(attrs={'class': 'form-control'}))
+    class Meta:
+        model = House
+
 
 
 class AddResidentForm(forms.Form):
