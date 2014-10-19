@@ -3,6 +3,7 @@ from django.contrib import admin
 from rest_framework import serializers, viewsets, routers, permissions
 from tsj.models import *
 from django.conf import settings
+from django.conf.urls.static import static
 
 
 # Serializers define the API representation.
@@ -74,3 +75,4 @@ if settings.DEBUG:
     urlpatterns += patterns('',
         url(r'^__debug__/', include(debug_toolbar.urls)),
     )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

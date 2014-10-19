@@ -98,7 +98,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    "tsj.context_processors.current_url"
+    "tsj.context_processors.current_url",
+    "tsj.context_processors.interface",
 )
 
 
@@ -118,5 +119,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     BASE_DIR + "/static/",
 )
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR + "/media/"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.min.css">
     <link rel="stylesheet" href="{{STATIC_URL}}js/jquery-ui-1.11.2.custom/jquery-ui.min.css">
     <link rel="stylesheet" href="{{STATIC_URL}}css/main.css">
+    {% block style %}{% endblock %}
 </head>
 <body>
 {% if request.user.is_authenticated %}

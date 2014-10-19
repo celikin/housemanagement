@@ -7,7 +7,7 @@
 {% block content %}
 	
 {% include "org/leftmenu.html" %}
-<div class="col-md-8">
+<div class="col-md-10">
 	<h3>Пользователи на рассмотрении</h3>
 	<div class="table-responsive">
             <table class="table table-striped">
@@ -26,13 +26,13 @@
   						<td>{{ u.last_name }} {{ u.first_name }} {{ u.middle_name }}</td>
   						<td>{{ u.house }}, кв. {{ u.flat }}</td>
   						<td>
-	  						<a href="{{ u.passport.url }}">
-	  							<img src="{{ u.passport.url }}">
+	  						<a href="{{ u.passport.url }}" data-lightbox="doc" data-title="Паспорт" >
+	  							<img src="{{ u.passport.url }}" style="max-width:100%;max-height:200px;">
 	  						</a>
   						</td>
   						<td>
-  							<a href="{{ u.registration.url }}">
-	  							<img src="{{ u.registration.url }}">
+  							<a href="{{ u.registration.url }}"  data-lightbox="doc" data-title="Прописка">
+	  							<img src="{{ u.registration.url }}"  style="max-width:100%;max-height:200px;">
 	  						</a>
   						</td>
   						<td> 
@@ -51,4 +51,11 @@
             </table>
           </div>
 </div>
+{% endblock %}
+{% block style %}
+<link href="{{STATIC_URL}}css/lightbox.css" rel="stylesheet" />
+{% endblock %}
+{% block scripts %}
+<script src="{{STATIC_URL}}js/jquery-1.11.0.min.js"></script>
+<script src="{{STATIC_URL}}js/lightbox.min.js"></script>
 {% endblock %}
