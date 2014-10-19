@@ -7,7 +7,7 @@
     <li {% if current_url == "create_notification" %}class="active"{% endif %}><a href="{% url "create_notification" %}">Создать оповещение</a></li>
     <li><a href="{% url 'userapprove' %}"><span class="label label-success pull-right">
     {{regcounter}}</span>Запросы на регистрацию </a></li>
-    <li><a href="#">Оповещения жильцов </a></li>
+    <li><a href="{% url 'org_employer_request' %}">Заявки на сотрудников</a></li>
     <li><a href="#">Показания счётчиков </a></li>
     <li><a href="#">Вывод по счетам</a></li>
 </ul>
