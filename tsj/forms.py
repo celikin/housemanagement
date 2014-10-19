@@ -4,13 +4,14 @@ from django.forms import ModelForm
 from .models import *
 from .streets import STREET_CHOICES
 
+
 class CompanyForm(ModelForm):
     username = forms.CharField(label=u"Имя пользователя", required=True)
     password = forms.CharField(label=u"Пароль", widget=forms.PasswordInput(), required=True)
 
     class Meta:
         model = Company
-        exclude = ('user',)
+        exclude = ('user', 'services')
 
 
 class AddHouseForm(ModelForm):

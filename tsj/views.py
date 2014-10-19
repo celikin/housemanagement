@@ -3,9 +3,6 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from .forms import *
-from .models import Resident, Company, House, Notification, MeterReadingHistory, MeterType
-from .models import ServiceCompany, Employer
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.forms.models import model_to_dict
@@ -19,6 +16,11 @@ from django.http import HttpResponse
 import json
 import time
 from django.utils import timezone
+
+from .forms import *
+from .models import Resident, Company, House, Notification, MeterReadingHistory, MeterType
+from .models import ServiceCompany, Employer
+from .streets import STREET_CHOICES
 
 def is_org(user):
     if not user.is_authenticated():
@@ -38,7 +40,8 @@ def home(request):
     calendar = []
     timezone.make_aware(dt.datetime.now(), timezone.get_default_timezone())
     for i in range(27):
-        calendar.append({"date": timezone.now() + dt.timedelta(days=i), "events": []})
+        date = timezone.now() + dt.timedelta(days=i)
+        calendar.append({"date": date, "events": [], "dayofweek": _date(date, "D")[:-1].upper()})
 
     notes = request.user.resident.house.notification_set.filter(end_date__lte=timezone.now()+dt.timedelta(days=27),
             start_date__gt=timezone.now()-dt.timedelta(days=1))
@@ -218,6 +221,7 @@ def list_houses(request):
     return render(request, "org/houses.html", {
         "houses": request.user.company.houses.all(),
         "form": AddHouseForm(),
+        "jchoices": json.dumps(STREET_CHOICES),
     })
 
 
