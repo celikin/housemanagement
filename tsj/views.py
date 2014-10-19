@@ -230,8 +230,8 @@ def delete_house(request):
         return redirect(reverse("home"))
     if request.method == "POST":
         form = AddHouseForm(request.POST)
-        if form.is_valid():
-            request.user.company.houses.remove(House.objects.get(id=form.cleaned_data['house']))
+        request.user.company.houses.remove(House.objects.get(
+            pk=form.data["house"]))
     return redirect(reverse("list_houses"))
 
 
@@ -241,7 +241,11 @@ def add_house(request):
     if request.method == "POST":
         form = AddHouseForm(request.POST)
         if form.is_valid():
-            request.user.company.houses.add(House.objects.get(id=form.cleaned_data['house']))
+            # ATTENTOIN not tred-saif!!111
+            h = House.objects.get_or_create(
+                street=form.cleaned_data['street'],
+                number=form.cleaned_data['number'])
+            request.user.company.houses.add(h[0])
     return redirect(reverse("list_houses"))
 
 
