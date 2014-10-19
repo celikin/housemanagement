@@ -59,3 +59,4 @@ tsj/migrations
 scans
 reset_db
 media
+sftp-config.json

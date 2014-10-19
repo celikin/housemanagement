@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Четыресто четыре</title>
+    <style type="text/css">
+    body{
+        margin:0;
+        padding:0;
+        height:100%;
+        font-family: 'Pt Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color:#353534;
+        outline: none;
+        text-indent: 0;
+        font-size: 100%;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 15px;
+    }
+    .containter {
+        width:960px;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    .errline {
+        background:#353534;
+        width:100%;}
+    .errline h1 {color:#fff;margin:0; font-size:60px;}
+    .descline{
+        background: #fff;
+        padding: 5px;
+    }
+    a {
+        color: rgba(81, 157, 233, 1);
+        text-decoration: none;
+        border-bottom: 1px solid rgb(81, 157, 233);
+        border-bottom: 1px solid rgba(81, 157, 233, 0.66);
+    }
+    a.dashed{
+        border-bottom-style: dashed;
+    }
+    a:hover {
+        color: #f35757;
+        border-bottom-color: #f35757;
+    }
+    </style>
+</head>
+<body>
+<div class="errline">
+    <div class="containter">
+    <h1>404</h1>
+    </div>
+</div>
+<div class="descline">
+<div class="containter">
+    <p>Такой страницы не существует. Во всяком случае сейчас. Это не проблема. Попробуйте зайти <a href="{% url "home" %}">на главную</a>.</p>
+    <p>Вот вам котейка, на всякий случай:</p>
+    <p><img src="http://media.daniil-r.ru/userphoto/14/08/iCX-TCURZL0.jpg" alt="Моя котейка"></p>
+</div>
+</div>
+</body>
+</html>
