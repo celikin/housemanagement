@@ -48,7 +48,6 @@ def home(request):
         delta2 = note.end_date - timezone.now()
         for i in range(delta1.days):
             calendar[delta2.days - i]["events"].append(note)
-    # print calendar, calendar[delta2.days - i]
     return render(request, "user/home.html", {
         "resident": request.user.resident,
         "calendar": calendar,
@@ -59,9 +58,9 @@ def home(request):
 def orghome(request):
     if not request.user.is_authenticated() or not is_org(request.user):
         return redirect(reverse("home"))
-
     if not is_org(request.user):
         return redirect(reverse("home"))
+    return redirect(reverse("list_houses"))
     return render(request, "org/home.html")
 
 
