@@ -11,7 +11,6 @@
         <p><a href="{{STATIC_URL}}/img/screenorg.png" data-lightbox="doc" data-title="Паспорт" ><img src="{{STATIC_URL}}/img/screenorg.png"></a></p>
         </div>
         <div class="col-md-4">
-        <div>Попробуйте сейчас:</div>
         <form class="form" role="form" method="POST" action="{% url "auth" %}">
             {% csrf_token %}
             <div class="form-group">
@@ -23,8 +22,9 @@
                 <input type="password" name="password" class="form-control" id="password" placeholder="Введите пароль">
             </div>
             <button type="submit" class="btn btn-default">Начать работу!</button>
+        <div>Нет аккаунта?</div>
+        <p><a class="biglink" href="{% url "registration" %}">Регистрация</a><br><a class="biglink" href="{% url "orgregistration" %}">Регистрация для компаний</a></p>
         </form>
-        <a class="biglink" href="{% url "registration" %}">Регистрация</a><br><a class="biglink" href="{% url "orgregistration" %}">Регистрация для компаний</a>
         <p><a href="https://play.google.com/store/apps/details?id=me.hackatone2.housemanagement">
   <img alt="Get it on Google Play"
        src="{{STATIC_URL}}img/ru_generic_rgb_wo_60.png" />
@@ -43,6 +43,11 @@ h1{
 }
 img{
     max-width: 100%;
+}
+form{
+    border-radius: 3px;
+    background: #F8F8F8;
+    padding: 3px;
 }
 </style>
 <link href="{{STATIC_URL}}css/lightbox.css" rel="stylesheet" />
