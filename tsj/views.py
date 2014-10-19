@@ -3,10 +3,6 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.template.defaultfilters import date as _date
-from .forms import *
-from .models import Resident, Company, House, Notification, MeterReadingHistory, MeterType
-from .models import ServiceCompany, Employer
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.forms.models import model_to_dict
@@ -21,6 +17,10 @@ import json
 import time
 from django.utils import timezone
 
+from .forms import *
+from .models import Resident, Company, House, Notification, MeterReadingHistory, MeterType
+from .models import ServiceCompany, Employer
+from .streets import STREET_CHOICES
 
 def is_org(user):
     if not user.is_authenticated():
@@ -221,6 +221,7 @@ def list_houses(request):
     return render(request, "org/houses.html", {
         "houses": request.user.company.houses.all(),
         "form": AddHouseForm(),
+        "jchoices": json.dumps(STREET_CHOICES),
     })
 
 
@@ -229,8 +230,8 @@ def delete_house(request):
         return redirect(reverse("home"))
     if request.method == "POST":
         form = AddHouseForm(request.POST)
-        if form.is_valid():
-            request.user.company.houses.remove(House.objects.get(id=form.cleaned_data['house']))
+        request.user.company.houses.remove(House.objects.get(
+            pk=form.data["house"]))
     return redirect(reverse("list_houses"))
 
 
@@ -240,7 +241,11 @@ def add_house(request):
     if request.method == "POST":
         form = AddHouseForm(request.POST)
         if form.is_valid():
-            request.user.company.houses.add(House.objects.get(id=form.cleaned_data['house']))
+            # ATTENTOIN not tred-saif!!111
+            h = House.objects.get_or_create(
+                street=form.cleaned_data['street'],
+                number=form.cleaned_data['number'])
+            request.user.company.houses.add(h[0])
     return redirect(reverse("list_houses"))
 
 
@@ -433,7 +438,49 @@ def news_api(request, company_id):
 
 
 def employer_request(request):
+
+    if request.method == "POST":
+        form = EmployerRequestForm(request.POST)
+        if form.is_valid():
+
+            employer = Employer.objects.get(pk=form.cleaned_data['employer'])
+            res = Resident.objects.get(user=request.user)
+            entity = form.save(commit=False)
+            entity.employer = employer
+            entity.user = res
+            entity.request_date = form.data.get('request_date', datetime.now())
+            messages.success(request, u"Ваша заявка принята! Ожидайте звонка")
+            entity.save()
+            return redirect(reverse('employer_request'))
+
     form = EmployerRequestForm()
+    res = Resident.objects.filter(user=request.user)
+    hist = EmployerRequest.objects.filter(user=res)
     return render(request, "user/employer_request.html", {
         "form": form,
+        "hist": hist,
     })
+
+
+def org_employer_request(request):
+
+    hist = EmployerRequest.objects.all()
+    return render(request, "org/employer_request.html", {
+        "hist": hist,
+    })    
+
+
+def delete_emp_req(request, pk):
+    emp = EmployerRequest.objects.filter(pk=pk)
+
+    if emp:
+        emp.delete()
+
+    return redirect(reverse('employer_request'))
+
+def approve_emp_req(request, pk):
+    emp = EmployerRequest.objects.get(pk=pk)
+
+    emp.status = True
+    emp.save()
+    return redirect(reverse('org_employer_request'))

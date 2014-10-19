@@ -88,6 +88,8 @@ class HouseAccountForm(forms.ModelForm):
         fields = ('account_change',)
 
 class EmployerRequestForm(forms.ModelForm):
+    employer = forms.ChoiceField(label=u"Работник", choices=((emp.id, emp) for emp in Employer.objects.all()),
+        widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = EmployerRequest

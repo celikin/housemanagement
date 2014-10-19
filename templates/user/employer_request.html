@@ -8,9 +8,9 @@
 
 {% include "user/leftmenu.html" %}
 
-<h2>Вызвать сантехника блеать</h2>
+<h2>Вызвать сотрудника</h2>
 
-<div class="col-md-8">
+<div class="col-md-10">
 	<form method = "post"  action="{% url "employer_request" %}" enctype="multipart/form-data"  class="form-horizontal" role="form">
 	{% csrf_token %}
 	{% for field in form.visible_fields %}
@@ -31,26 +31,70 @@
 	</div>
 	{% endfor %}
 	<div class="form-group">
-	    <label for="text">Когда должен прийти сотрудник</label>
+	<div class="col-sm-offset-3 col-sm-10">
+		<label for="request_date">Когда должен прийти сотрудник</label>
 	    <div class="input-group col-sm-3" >
 	      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-	      <input class="form-control" id="date" name="request_date" placeholder="введите нач. дату">
-	    </div>		
+	      <input class="form-control" id="request_date" name="request_date" placeholder="введите дату">
+	    </div>	
 	</div>
-
+	
+	</div>
+<div class="form-group">
+	    <div class="col-sm-offset-3 col-sm-10">
+	    	<button type="submit" class="btn btn-success">Записать</button>
+	    </div>
+	 </div>
 	</form>
+	<h2>История заявок</h2>
+  {% if hist %}
+  <table class="table">
+   <thead>
+   		<tr> 
+   			<th>№</th>
+   			{# <th>ФИО</th> #}
+   			<th>Работник</th>
+   			<th>Причина вызова</th>
+   			<th>Статус</th>
+   		</tr>
+   </thead>
+   <tbody>
+   		{% for h in hist %}
+      <tr>
+   			<td>{{ forloop.counter }}</td>
+   			<td>{{ h.employer.profession}}</td>
+   			<td>{{h.reason}}</td>
+   			<td>
+
+   			{% if h.status %}
+   				Одобрено
+   			{% else %}
+   				На рассмотрении
+   			{% endif%}
+   			</td>
+   		{% endfor %}
+      </tr>
+   </tbody>
+  </table>
+
+  {% else %}
+  	Нет заявок
+  {% endif%}
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script type="text/javascript">
 $(function() {
-  $( "#from" ).datepicker({
+  $( "#request_date" ).datepicker({
     defaultDate: "0",
     minDate:"0",
-    altFormat: "dd.mm.yy",
-    dateFormat: "dd.mm.yy",
+    altFormat: "yy-mm-dd",
+    dateFormat: "yy-mm-dd",
     changeMonth: true,
+    onClose: function( selectedDate ) {
+      $( "#to" ).datepicker( "option", "minDate", selectedDate );
+    }
   });
 });
 </script>

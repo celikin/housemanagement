@@ -7,7 +7,7 @@ housemanagment
 	* Простой вариант
 		./manage.py makemigrations
 		./manage.py migrate
-		./manage.py loaddata initial companies srvprov arbitrary
+		./manage.py loaddata initial companies srvprov arbitrary meter_types
 	* Сложный вариант
 		./updatedb.bash
 
