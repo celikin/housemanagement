@@ -29,114 +29,12 @@
     <div class="col-md-12">
         <p><span class="demo light">Нет света</span> <span class="demo water">Нет воды</span></p>
         <ul class="week">
-            <li>
+            {% for item in calendar %}
+            <li class="{% for event in item.events %}{% if event.note_type == 0%}nowater{% elif event.note_type == 1%}nolight{% endif %}{% endfor %}">
                 <div class="dayofweek">ПН</div>
-                <div class="day">12</div>
+                <div class="day">{{item.date.day}}</div>
             </li>
-            <li>
-                <div class="dayofweek">ВТ</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">СР</div>
-                <div class="day"><a href="#">12</a></div>
-            </li>
-            <li>
-                <div class="dayofweek">ЧТ</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ПТ</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">СБ</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li class="nolight">
-                <div class="dayofweek">ВС</div>
-                <div class="day ">14</div>
-            </li>
-            <li class="nowater">
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li class="nowater nolight">
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
-            <li>
-                <div class="dayofweek">ВС</div>
-                <div class="day">12</div>
-            </li>
+            {% endfor %}
         </ul>
         <h2>Уведомления от {{org.get_company_type}}</h2>
         {% for note in notifications %}

@@ -12,11 +12,13 @@ from django.forms.models import model_to_dict
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.template import Context
+import datetime as dt
 from datetime import datetime
 from rest_framework.renderers import JSONRenderer
 from django.http import HttpResponse
 import json
 import time
+from django.utils import timezone
 
 def is_org(user):
     if not user.is_authenticated():
@@ -33,9 +35,23 @@ def home(request):
         return render(request, "home.html")
     if is_org(request.user):
         return redirect(reverse("orghome"))
+    calendar = []
+    timezone.make_aware(dt.datetime.now(), timezone.get_default_timezone())
+    for i in range(27):
+        calendar.append({"date": timezone.now() + dt.timedelta(days=i), "events": []})
+
+    notes = request.user.resident.house.notification_set.filter(end_date__lte=timezone.now()+dt.timedelta(days=27),
+            start_date__gt=timezone.now()-dt.timedelta(days=1))
+
+    for note in notes:
+        delta1 = note.end_date - note.start_date
+        delta2 = note.end_date - timezone.now()
+        for i in range(delta1.days):
+            calendar[delta2.days - i]["events"].append(note)
+    print calendar, calendar[delta2.days - i]
     return render(request, "user/home.html", {
         "resident": request.user.resident,
-        "notifications": request.user.resident.house.notification_set.all(),
+        "calendar": calendar,
         "org": request.user.resident.house.company_set.all()[0],
     })
 
