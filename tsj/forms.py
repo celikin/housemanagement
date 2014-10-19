@@ -78,9 +78,16 @@ class MeterForm(forms.ModelForm):
     class Meta:
         model = MeterReadingHistory
         fields = ('value',)
+        exclude = ('meter_type', )
     
 class HouseAccountForm(forms.ModelForm):
 
     class Meta:
         model = HouseAccount
         fields = ('account_change',)
+
+class EmployerRequestForm(forms.ModelForm):
+
+    class Meta:
+        model = EmployerRequest
+        fields = ('reason', )
