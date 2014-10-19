@@ -85,6 +85,9 @@ urlpatterns = patterns('',
     url(r'^meter/$', 'tsj.views.meter', name="meter"),
     url(r'^org/houseaccount/(?P<pk>\d+)/$', 'tsj.views.house_account', name="houseaccount"),
     url(r'^employer_request/$', 'tsj.views.employer_request', name="employer_request"),
+    url(r'^org/employer_request/$', 'tsj.views.org_employer_request', name="org_employer_request"),
+    url(r'^org/delete_emp_req/(?P<pk>\d+)/$', 'tsj.views.delete_emp_req', name="delete_emp_req"),
+    url(r'^org/approve_emp_req/(?P<pk>\d+)/$', 'tsj.views.approve_emp_req', name="approve_emp_req"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

@@ -430,7 +430,49 @@ def news_api(request, company_id):
 
 
 def employer_request(request):
+
+    if request.method == "POST":
+        form = EmployerRequestForm(request.POST)
+        if form.is_valid():
+
+            employer = Employer.objects.get(pk=form.cleaned_data['employer'])
+            res = Resident.objects.get(user=request.user)
+            entity = form.save(commit=False)
+            entity.employer = employer
+            entity.user = res
+            entity.request_date = form.data.get('request_date', datetime.now())
+            messages.success(request, u"Ваша заявка принята! Ожидайте звонка")
+            entity.save()
+            return redirect(reverse('employer_request'))
+
     form = EmployerRequestForm()
+    res = Resident.objects.filter(user=request.user)
+    hist = EmployerRequest.objects.filter(user=res)
     return render(request, "user/employer_request.html", {
         "form": form,
+        "hist": hist,
     })
+
+
+def org_employer_request(request):
+
+    hist = EmployerRequest.objects.all()
+    return render(request, "org/employer_request.html", {
+        "hist": hist,
+    })    
+
+
+def delete_emp_req(request, pk):
+    emp = EmployerRequest.objects.filter(pk=pk)
+
+    if emp:
+        emp.delete()
+
+    return redirect(reverse('employer_request'))
+
+def approve_emp_req(request, pk):
+    emp = EmployerRequest.objects.get(pk=pk)
+
+    emp.status = True
+    emp.save()
+    return redirect(reverse('org_employer_request'))

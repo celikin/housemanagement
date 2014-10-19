@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "org/menu.html" %}
+{% endblock %}
+
+{% block content %}
+
+{% include "org/leftmenu.html" %}
+
+<h2>Список заявок</h2>
+
+<div class="col-md-10">
+
+  {% if hist %}
+  <table class="table">
+   <thead>
+   		<tr> 
+   			<th>№</th>
+   			{# <th>ФИО</th> #}
+   			<th>Работник</th>
+   			<th>Причина вызова</th>
+   			<th>Статус</th>
+   		</tr>
+   </thead>
+   <tbody>
+   		{% for h in hist %}
+      <tr>
+   			<td>{{ forloop.counter }}</td>
+   			<td>{{ h.employer.profession}}</td>
+   			<td>{{h.reason}}</td>
+   			<td>
+
+   			{% if h.status %}
+   				Одобрено
+   			{% else %}
+          <div class="btn-group">
+          <a href="{% url 'approve_emp_req' h.id %}">
+            <button class="btn btn-success">Одобрить</button>
+          </a>
+            <a href="{% url 'delete_emp_req' h.id %}">
+              <button class="btn btn-danger">Удалить</button>
+            </a>
+            
+          </div>
+   				
+   			{% endif%}
+   			</td>
+   		{% endfor %}
+      </tr>
+   </tbody>
+  </table>
+
+  {% else %}
+  	Нет заявок
+  {% endif%}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(function() {
+  $( "#request_date" ).datepicker({
+    defaultDate: "0",
+    minDate:"0",
+    altFormat: "yy-mm-dd",
+    dateFormat: "yy-mm-dd",
+    changeMonth: true,
+    onClose: function( selectedDate ) {
+      $( "#to" ).datepicker( "option", "minDate", selectedDate );
+    }
+  });
+});
+</script>
+{% endblock %}
