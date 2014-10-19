@@ -58,3 +58,4 @@ db.sqlite3
 tsj/migrations
 scans
 reset_db
+media

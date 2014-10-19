@@ -12,8 +12,13 @@ from django.forms.models import model_to_dict
 from django.core.mail import send_mail
 from django.template.loader import get_template
 from django.template import Context
+import datetime as dt
 from datetime import datetime
-
+from rest_framework.renderers import JSONRenderer
+from django.http import HttpResponse
+import json
+import time
+from django.utils import timezone
 
 def is_org(user):
     if not user.is_authenticated():
@@ -30,9 +35,22 @@ def home(request):
         return render(request, "home.html")
     if is_org(request.user):
         return redirect(reverse("orghome"))
+    calendar = []
+    timezone.make_aware(dt.datetime.now(), timezone.get_default_timezone())
+    for i in range(27):
+        calendar.append({"date": timezone.now() + dt.timedelta(days=i), "events": []})
+
+    notes = request.user.resident.house.notification_set.filter(end_date__lte=timezone.now()+dt.timedelta(days=27),
+            start_date__gt=timezone.now()-dt.timedelta(days=1))
+
+    for note in notes:
+        delta1 = note.end_date - note.start_date
+        delta2 = note.end_date - timezone.now()
+        for i in range(delta1.days):
+            calendar[delta2.days - i]["events"].append(note)
     return render(request, "user/home.html", {
         "resident": request.user.resident,
-        "notifications": request.user.resident.house.notification_set.all(),
+        "calendar": calendar,
         "org": request.user.resident.house.company_set.all()[0],
     })
 
@@ -40,9 +58,9 @@ def home(request):
 def orghome(request):
     if not request.user.is_authenticated() or not is_org(request.user):
         return redirect(reverse("home"))
-
     if not is_org(request.user):
         return redirect(reverse("home"))
+    return redirect(reverse("list_houses"))
     return render(request, "org/home.html")
 
 
@@ -325,7 +343,6 @@ def meter(request):
 
     res = Resident.objects.filter(user=request.user)
     hist = MeterReadingHistory.objects.filter(resident=res)
-    print hist
 
     have_type = []
     for h in hist:
@@ -373,3 +390,40 @@ def house_account(request, pk):
         "pk": pk,
         "sum": account,
 	})
+
+def auth_api(request):
+
+    if request.method != 'POST':
+        return HttpResponse('Unauthorized', status=401)
+
+    username = request.DATA['username']
+    password = request.DATA['password']
+    user = authenticate(username=username, password=password)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+
+    try:
+        res = Resident.objects.get(user=user)
+        c = Company.objects.filter(houses=res.house)
+    except Exception, e:
+        return HttpResponse('Unauthorized', status=401)
+    
+    data =  {"id": user.id, "id_company":c.id}
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+def news_api(request, company_id):
+    company = Company.objects.filter(pk=company_id)
+    if not company:
+        HttpResponse('Unauthorized', status=401)
+
+    company = company[0]
+    news = Notification.objects.filter(houses__in=company.houses.all())
+    
+    res = []
+    for n in news:
+        res += [ {
+            "main": n.text,
+            "header": n.note_type,
+            "date": int(time.mktime(n.pub_date.timetuple())*1000)
+        }]
+    return HttpResponse(json.dumps(res), content_type="application/json")

@@ -8,7 +8,6 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li {% if current_url == "orghome" %} class="active" {% endif %}><a href="{% url "orghome" %}">Панель управления</a></li>
                 <li {% if current_url == "orgprofile" %} class="active" {% endif %}><a href="{% url "orgprofile" %}">Профиль</a></li>
                 <li ><a href="{% url "logoutview" %}">Выход</a></li>
             </ul>
