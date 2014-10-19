@@ -40,7 +40,8 @@ def home(request):
     calendar = []
     timezone.make_aware(dt.datetime.now(), timezone.get_default_timezone())
     for i in range(27):
-        calendar.append({"date": timezone.now() + dt.timedelta(days=i), "events": []})
+        date = timezone.now() + dt.timedelta(days=i)
+        calendar.append({"date": date, "events": [], "dayofweek": _date(date, "D")[:-1].upper()})
 
     notes = request.user.resident.house.notification_set.filter(end_date__lte=timezone.now()+dt.timedelta(days=27),
             start_date__gt=timezone.now()-dt.timedelta(days=1))
@@ -377,7 +378,7 @@ def house_account(request, pk):
             entity.house = house
             messages.success(request, 'Запись добавлена')
             entity.save()
-            return redirect(reverse('houseaccount', kwargs={'pk':pk}), )
+            return redirect(reverse('houseaccount', kwargs={'pk':pk}))
     
     form = HouseAccountForm()
     house = House.objects.filter(pk=pk)
@@ -430,3 +431,10 @@ def news_api(request, company_id):
             "date": int(time.mktime(n.pub_date.timetuple())*1000)
         }]
     return HttpResponse(json.dumps(res), content_type="application/json")
+
+
+def employer_request(request):
+    form = EmployerRequestForm()
+    return render(request, "user/employer_request.html", {
+        "form": form,
+    })

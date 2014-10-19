@@ -1,20 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="presentation">
-    <h1>House Management</h1>
-    <div>Попробуйте сейчас:</div>
-    <form class="form-inline" role="form" method="POST" action="{% url "auth" %}">
-        {% csrf_token %}
-        <div class="form-group">
-            <label class="sr-only" for="login">Ваш логин</label>
-            <input type="login" name="username" class="form-control" id="login" placeholder="Введите логин">
+    <div class='grid'>
+        <div class="col-md-8">
+        <h1>House management для жильцев</h1>
+        <p>Держите свою квартиру под контролем. Оптимизируйте расходы и следите за работой комунальных служб, передавайт показания любых счетчиков прямо из мобильного приложения. Вы также можете без проблем и очередей оставить заявку на выполнение определенных услуг. </p>
+        <p><a href="{{STATIC_URL}}/img/screen.png" data-lightbox="doc" data-title="Паспорт" ><img src="{{STATIC_URL}}/img/screen.png"></a></p>
+        <h1>Для товариществ и управляющих компаний</h1>
+        <p>Сервис позволяет держать связь с жильцами, мгноевенное оповещать их о ремонтах, собраниях и прочих событиях.</p>
+        <p><a href="{{STATIC_URL}}/img/screenorg.png" data-lightbox="doc" data-title="Паспорт" ><img src="{{STATIC_URL}}/img/screenorg.png"></a></p>
         </div>
-        <div class="form-group">
-            <label class="sr-only" for="password">Пароль</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Введите пароль">
-        </div>
-        <button type="submit" class="btn btn-default">Начать работу!</button>
-    </form>
-    <a class="biglink" href="{% url "registration" %}">Регистрация</a> <a class="biglink" href="{% url "orgregistration" %}">Регистрация для компаний</a>
+        <div class="col-md-4">
+        <form class="form" role="form" method="POST" action="{% url "auth" %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="sr-only" for="login">Ваш логин</label>
+                <input type="login" name="username" class="form-control" id="login" placeholder="Введите логин">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="password">Пароль</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Введите пароль">
+            </div>
+            <button type="submit" class="btn btn-default">Начать работу!</button>
+        <div>Нет аккаунта?</div>
+        <p><a class="biglink" href="{% url "registration" %}">Регистрация</a><br><a class="biglink" href="{% url "orgregistration" %}">Регистрация для компаний</a></p>
+        </form>
+        <p><a href="https://play.google.com/store/apps/details?id=me.hackatone2.housemanagement">
+  <img alt="Get it on Google Play"
+       src="{{STATIC_URL}}img/ru_generic_rgb_wo_60.png" />
+</a></p>
+      </div>
   </div>
+</div>
+{% endblock %}
+{% block style %}
+<style type="text/css">
+body{
+    font-family: 
+}
+h1{
+    margin-top: 0
+}
+img{
+    max-width: 100%;
+}
+form{
+    border-radius: 3px;
+    background: #F8F8F8;
+    padding: 3px;
+}
+</style>
+<link href="{{STATIC_URL}}css/lightbox.css" rel="stylesheet" />
+{% endblock %}
+{% block scripts %}
+<script src="{{STATIC_URL}}js/jquery-1.11.0.min.js"></script>
+<script src="{{STATIC_URL}}js/lightbox.min.js"></script>
 {% endblock %}

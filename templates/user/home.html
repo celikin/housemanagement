@@ -30,13 +30,18 @@
         <p><span class="demo light">Нет света</span> <span class="demo water">Нет воды</span></p>
         <ul class="week">
             {% for item in calendar %}
-            <li class="{% for event in item.events %}{% if event.note_type == 0%}nowater{% elif event.note_type == 1%}nolight{% endif %}{% endfor %}">
-                <div class="dayofweek">ПН</div>
-                <div class="day">{{item.date.day}}</div>
+            <li class="{% for event in item.events %}{% if event.note_type == 0%}nowater {% elif event.note_type == 1%}nolight{% endif %}{% endfor %}{% if item.dayofweek == "СБ" or item.dayofweek == "ВС" %} weekend{% endif %}">
+                <div class="dayofweek">{{item.dayofweek}}</div>
+                <div class="day">
+                    {% if item.events %}
+                    <a href="#" class="pop" data-toggle="popover"  data-trigger="hover" data-placement="bottom" title="События" data-content="{% for event in item.events %}<strong>{{event.get_note_type_display}}:</strong> {{event.text}}<br>{% endfor %}" data-html="true" style="white-space: nowrap;">{{item.date.day}}</a>
+                    {% else %}
+                    {{item.date.day}}
+                    {% endif %}
+                </div>
             </li>
             {% endfor %}
         </ul>
-        <h2>Уведомления от {{org.get_company_type}}</h2>
         {% for note in notifications %}
         <div class="note">
             <div class="date">{{note.pub_date|date:"j E"}}, <nobr>{{note.pub_date|date:"Y"}}</nobr></div>
@@ -45,4 +50,9 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$('.pop').popover();
+</script>
 {% endblock %}
