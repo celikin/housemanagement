@@ -34,10 +34,24 @@ class ResidentViewSet(viewsets.ModelViewSet):
     serializer_class = ResidentSerializer
     # permission_classes = (permissions.IsAuthenticated,)
 
+
+class MeterSerializer(serializers.HyperlinkedModelSerializer):
+    meter_type = serializers.PrimaryKeyRelatedField()
+
+    class Meta:
+        model = MeterReadingHistory
+
+
+class MeterViewSet(viewsets.ModelViewSet):
+    queryset = MeterReadingHistory.objects.all()
+    serializer_class = MeterSerializer
+
+
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'company', CompanyViewSet)
 router.register(r'user', ResidentViewSet)
+router.register(r'meter', MeterViewSet)
 
 urlpatterns = patterns('',
 
@@ -70,6 +84,7 @@ urlpatterns = patterns('',
     url(r'^org/sendreject/(?P<pk>\d+)/$', 'tsj.views.sendreject', name="sendreject"),
     url(r'^meter/$', 'tsj.views.meter', name="meter"),
     url(r'^org/houseaccount/(?P<pk>\d+)/$', 'tsj.views.house_account', name="houseaccount"),
+    url(r'^employer_request/$', 'tsj.views.employer_request', name="employer_request"),
     url(r'^admin/', include(admin.site.urls)),
 )
 

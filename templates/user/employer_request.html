@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "user/menu.html" %}
+{% endblock %}
+
+{% block content %}
+
+{% include "user/leftmenu.html" %}
+
+<h2>Вызвать сантехника блеать</h2>
+
+<div class="col-md-8">
+	<form method = "post"  action="{% url "employer_request" %}" enctype="multipart/form-data"  class="form-horizontal" role="form">
+	{% csrf_token %}
+	{% for field in form.visible_fields %}
+	<div class="form-group {% if field.errors %}has-error{% endif %}">
+		<label for="{{field.name}}" class="col-sm-3 control-label">
+		{{field.label}}:
+		</label>
+		<div class="col-sm-4">
+			{{field}}		
+			<span class="help-block">
+			{% if field.errors %}
+				{% for error in field.errors %}
+					{{error}}
+				{% endfor %}
+			{% endif %}
+			</span>
+		</div>
+	</div>
+	{% endfor %}
+	<div class="form-group">
+	    <label for="text">Когда должен прийти сотрудник</label>
+	    <div class="input-group col-sm-3" >
+	      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+	      <input class="form-control" id="date" name="request_date" placeholder="введите нач. дату">
+	    </div>		
+	</div>
+
+	</form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+$(function() {
+  $( "#from" ).datepicker({
+    defaultDate: "0",
+    minDate:"0",
+    altFormat: "dd.mm.yy",
+    dateFormat: "dd.mm.yy",
+    changeMonth: true,
+  });
+});
+</script>
+{% endblock %}

@@ -104,7 +104,16 @@ class Employer(models.Model):
     company = models.ForeignKey(Company, verbose_name=u"Компания")
 
     def __unicode__(self):
-        return u"%s %s" % (self.first_name, self.last_name)
+        return u"%s %s %s" % (self.profession, self.first_name, self.last_name)
+
+
+class EmployerRequest(models.Model):
+    employer = models.ForeignKey(Employer)
+    request_date = models.DateField(verbose_name=u"Когда сотруднику следует прийти")
+    reason = models.TextField(verbose_name=u"Причина вызова сотрудника")
+
+    def __unicode__(self):
+        return u"%s - %s" % (self.employer, self.reason)
 
 
 class MeterReadingHistory(models.Model):

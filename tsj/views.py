@@ -377,7 +377,7 @@ def house_account(request, pk):
             entity.house = house
             messages.success(request, 'Запись добавлена')
             entity.save()
-            return redirect(reverse('houseaccount', kwargs={'pk':pk}), )
+            return redirect(reverse('houseaccount', kwargs={'pk':pk}))
     
     form = HouseAccountForm()
     house = House.objects.filter(pk=pk)
@@ -430,3 +430,10 @@ def news_api(request, company_id):
             "date": int(time.mktime(n.pub_date.timetuple())*1000)
         }]
     return HttpResponse(json.dumps(res), content_type="application/json")
+
+
+def employer_request(request):
+    form = EmployerRequestForm()
+    return render(request, "user/employer_request.html", {
+        "form": form,
+    })
