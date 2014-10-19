@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.core.validators import MinValueValidator
 
+
 class Street(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'Название улицы')
 
@@ -15,10 +16,12 @@ class House(models.Model):
     def __unicode__(self):
         return '%s, %s' % (self.street.name, self.number)
 
+
 class HouseAccount(models.Model):
     house = models.ForeignKey(House)
     account_change = models.FloatField(verbose_name=u"Величина изменения")
     pub_date = models.DateField(default=datetime.now, verbose_name=u"Дата публикации")
+
 
 class BaseCompany(models.Model):
     name = models.CharField(max_length=150, verbose_name=u"Название")
@@ -127,7 +130,8 @@ class Notification(models.Model):
         (2, u"Собрание"),
         (3, u"Общее"),
     )
-    pub_date = models.DateTimeField(default=datetime.now, verbose_name=u'Дата публикации')
-    text = models.TextField(verbose_name=u"Текст")
+    start_date = models.DateTimeField(verbose_name=u'Начиная с')
+    end_date = models.DateTimeField(verbose_name=u'Заканчивая')
+    text = models.TextField(verbose_name=u"Доп информация")
     note_type = models.IntegerField(choices=NOTIFICATIONS, default=3, verbose_name=u"Тип")
     houses = models.ManyToManyField(House)
