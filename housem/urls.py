@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from rest_framework import serializers, viewsets, routers, permissions
+from rest_framework import status
 from tsj.models import *
 from django.conf import settings
 
@@ -10,14 +11,14 @@ class CompanySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('company_type', 'full_name','post_adress','phone','email','boss_fio',
+        fields = ('company_type', 'full_name','post_address','phone','email','boss_fio',
         	'inn','orgn','orgn_date','orgn_emitter','kpp','bill_numb',
         	'bank_name','kor_schet','bik','workgraph')
 
 class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
-    permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.IsAuthenticated, )
 
 class ResidentSerializer(serializers.HyperlinkedModelSerializer):
     user = serializers.PrimaryKeyRelatedField()
@@ -25,21 +26,23 @@ class ResidentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Resident
-        fields = ('fio', 'flat', 'lnumb', 'phone', 'user', 'house')
+        fields = ('first_name', 'last_name', 'middle_name', 'flat', 'bill_numb', 'phone', 'user', 'house')
 
 class ResidentViewSet(viewsets.ModelViewSet):
     queryset = Resident.objects.all()
     serializer_class = ResidentSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'companies', CompanyViewSet)
-router.register(r'residents', ResidentViewSet)
+router.register(r'company', CompanyViewSet)
+router.register(r'user', ResidentViewSet)
 
 urlpatterns = patterns('',
 
     url(r'^api/', include(router.urls)),
+    url(r'^api/auth/$', 'tsj.views.auth_api', name="auth_api"),
+    url(r'^api/news/(?P<company_id>\d+)/$', 'tsj.views.news_api', name="news_api"),
     url(r'^$', 'tsj.views.home', name='home'),
     url(r'^org/home/$', 'tsj.views.orghome', name="orghome"),
     url(r'^org/profile/$', 'tsj.views.orgprofile', name="orgprofile"),
