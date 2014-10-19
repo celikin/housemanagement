@@ -14,8 +14,11 @@ from django.template.loader import get_template
 from django.template import Context
 import datetime as dt
 from datetime import datetime
+from rest_framework.renderers import JSONRenderer
+from django.http import HttpResponse
+import json
+import time
 from django.utils import timezone
-
 
 def is_org(user):
     if not user.is_authenticated():
@@ -340,7 +343,6 @@ def meter(request):
 
     res = Resident.objects.filter(user=request.user)
     hist = MeterReadingHistory.objects.filter(resident=res)
-    print hist
 
     have_type = []
     for h in hist:
@@ -388,3 +390,40 @@ def house_account(request, pk):
         "pk": pk,
         "sum": account,
 	})
+
+def auth_api(request):
+
+    if request.method != 'POST':
+        return HttpResponse('Unauthorized', status=401)
+
+    username = request.DATA['username']
+    password = request.DATA['password']
+    user = authenticate(username=username, password=password)
+    if user is None:
+        return HttpResponse('Unauthorized', status=401)
+
+    try:
+        res = Resident.objects.get(user=user)
+        c = Company.objects.filter(houses=res.house)
+    except Exception, e:
+        return HttpResponse('Unauthorized', status=401)
+    
+    data =  {"id": user.id, "id_company":c.id}
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+def news_api(request, company_id):
+    company = Company.objects.filter(pk=company_id)
+    if not company:
+        HttpResponse('Unauthorized', status=401)
+
+    company = company[0]
+    news = Notification.objects.filter(houses__in=company.houses.all())
+    
+    res = []
+    for n in news:
+        res += [ {
+            "main": n.text,
+            "header": n.note_type,
+            "date": int(time.mktime(n.pub_date.timetuple())*1000)
+        }]
+    return HttpResponse(json.dumps(res), content_type="application/json")
