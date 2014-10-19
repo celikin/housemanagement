@@ -127,6 +127,7 @@ class Notification(models.Model):
         (2, u"Собрание"),
         (3, u"Общее"),
     )
+    NOTIFICATIONS_DICT = dict(NOTIFICATIONS)
     start_date = models.DateTimeField(verbose_name=u'Начиная с')
     end_date = models.DateTimeField(verbose_name=u'Заканчивая')
     text = models.TextField(verbose_name=u"Доп информация")

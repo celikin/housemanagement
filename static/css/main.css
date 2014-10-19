@@ -11,6 +11,10 @@
 	height		: 500px;
 	font-size	: 11px;
 }
+.inacvtive{
+    color:#ccc;
+    font-size: 13px;
+}
 /* Dashboard */
 .profile{
     padding: 5px;
@@ -80,7 +84,10 @@
     background: #FCE292;
 }
 .week a{
-    color:Red;
+    color:;
+}
+.weekend .dayofweek{
+    color:#E92B2B;
 }
 .demo{
     padding: 3px;
